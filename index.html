@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물리 시뮬레이션 강의</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #0077cc;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .chapter-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .chapter-list li {
+            margin: 10px 0;
+        }
+        .chapter-list a {
+            text-decoration: none;
+            color: #0077cc;
+        }
+        .chapter-list a:hover {
+            text-decoration: underline;
+        }
+        .simulation {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: white;
+        }
+        .simulation iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>물리 시뮬레이션 강의</h1>
+    </header>
+    <div class="container">
+        <h2>챕터 목록</h2>
+        <ul class="chapter-list">
+            <li><a href="#chapter1">챕터 1: 뉴턴의 법칙</a></li>
+            <li><a href="#chapter2">챕터 2: 운동의 법칙</a></li>
+            <li><a href="#chapter3">챕터 3: 에너지 보존 법칙</a></li>
+            <!-- 더 많은 챕터를 여기에 추가하세요 -->
+        </ul>
+
+        <div id="chapter1" class="chapter">
+            <h2>챕터 1: 뉴턴의 법칙</h2>
+            <div class="simulation">
+                <h3>뉴턴의 첫 번째 법칙 시뮬레이션</h3>
+                <!-- 예시로 임베드된 시뮬레이션 -->
+                <iframe src="https://example.com/newton_first_law_simulation.html"></iframe>
+            </div>
+        </div>
+
+        <div id="chapter2" class="chapter">
+            <h2>챕터 2: 운동의 법칙</h2>
+            <div class="simulation">
+                <h3>운동의 두 번째 법칙 시뮬레이션</h3>
+                <!-- 예시로 임베드된 시뮬레이션 -->
+                <iframe src="https://example.com/second_law_of_motion_simulation.html"></iframe>
+            </div>
+        </div>
+
+        <div id="chapter3" class="chapter">
+            <h2>챕터 3: 에너지 보존 법칙</h2>
+            <div class="simulation">
+                <h3>에너지 보존 법칙 시뮬레이션</h3>
+                <!-- 예시로 임베드된 시뮬레이션 -->
+                <iframe src="https://example.com/conservation_of_energy_simulation.html"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
