@@ -66,8 +66,6 @@ input{font:inherit}
 .tabs{display:flex;background:#fff;border-radius:18px 18px 0 0;padding:8px 0 12px;flex:none;box-shadow:0 -1px 0 var(--line)}
 .tabs button{flex:1;font-size:11px;color:#9aa5b1}
 .tabs button.on{color:var(--brand);font-weight:700}
-.tabs i{display:block;width:24px;height:22px;margin:0 auto 4px;border-radius:7px 7px 4px 4px;background:currentColor;opacity:.75}
-.tabs .on i{opacity:1}
 /* account detail */
 .detail-h{padding:6px 20px 20px}
 .detail-h h2{font-size:24px;margin:0 0 4px}
@@ -117,6 +115,30 @@ input{font:inherit}
 .toast.on{opacity:1}
 .set{padding:0 20px 20px}
 .set p{color:var(--sub);font-size:14px;line-height:1.5}
+.top{position:sticky;top:0;z-index:3;background:#dbe6e1}
+.acct{position:relative}
+.acct .dots{position:absolute;right:18px;top:18px;font-size:22px;color:#555;line-height:1}
+.pager{text-align:center;padding:0 0 14px}
+.pager i{display:inline-block;width:6px;height:6px;border-radius:50%;border:1px solid #6b7480;margin:0 4px}
+.pager i.on{background:#4a5560;border-color:#4a5560}
+.quick{position:relative;overflow:visible;padding-bottom:26px}
+.quick::after{content:"";position:absolute;left:50%;bottom:12px;width:30px;height:4px;margin-left:-15px;border-radius:2px;background:linear-gradient(90deg,#4a5560 75%,#c9d1d9 75%)}
+.quick .rec{position:absolute;right:-8px;bottom:-4px;background:var(--brand);color:#fff;font-size:10px;font-weight:700;border-radius:8px;padding:1px 5px}
+.bubble{position:absolute;right:14px;top:-10px;background:#fff;border-radius:12px;padding:3px 9px;font-size:12px;font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.row .xx{margin-left:auto;width:24px;height:24px;border-radius:50%;background:#e6ebf0;font-size:11px;color:#555}
+.divider{border-top:1px solid var(--line);margin-top:22px}
+.recs{padding:22px 16px 20px}
+.recs small{color:var(--sub);font-size:14px;padding:0 4px}
+.recs h2{font-size:18px;margin:4px 0 16px;padding:0 4px}
+.recs .g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.recs .g button{background:#f6f8fa;border-radius:16px;padding:10px 6px 18px;text-align:center}
+.recs .rk{display:block;text-align:left;font-size:11px;font-weight:700;color:var(--brand);margin-left:4px}
+.recs .em{font-size:30px;display:block;margin:6px 0 8px}
+.recs b{display:block;font-size:15px;margin-bottom:4px}
+.recs span.t{font-size:13px;color:var(--sub);line-height:1.4;display:block}
+.fb{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:#d3dbd7;border-radius:18px;padding:16px 20px;margin-bottom:12px}
+.fb small{display:block;color:#555;font-size:13px}.fb b{font-size:15px}.fb .ar{margin-left:auto;font-size:18px;color:#444}
+.tabs svg{display:block;width:26px;height:26px;margin:0 auto 3px}
 </style>
 </head>
 <body>
@@ -136,13 +158,13 @@ input{font:inherit}
     <div class="pad">
       <div class="card notice" id="notice">
         <div class="ic">?</div>
-        <div><small>새싹뱅크 모의 금융 수업</small><b><span class="uname"></span>님, 연습을 시작해 볼까요?</b></div>
+        <div><small>새로워진 새싹뱅크 홈</small><b><span class="uname"></span>님의 의견이 궁금해요</b></div>
         <button class="x" id="noticeX">✕</button>
       </div>
 
       <div class="card">
         <button class="acct" style="display:block;width:100%;text-align:left" data-go="acct">
-          <div class="nm">MY 입출금통장 <span class="mainNo"></span></div>
+          <div class="nm">MY 입출금통장 <span class="mainNo"></span> <span>⧉</span></div><span class="dots">⋮</span>
           <div class="bal" id="homeBal">0원</div>
         </button>
         <div class="btns" style="padding:0 20px 20px;margin-top:-20px">
@@ -151,25 +173,43 @@ input{font:inherit}
         </div>
         <button class="promo" style="width:100%;text-align:left" data-toast="모의 앱에서는 카드를 발급하지 않아요">
           <div class="rnd">💳</div>
-          <div><small>수업용 연습 카드</small><b>체크카드 알아보기</b></div>
+          <div><small>골라받는 역대급 혜택</small><b>체크카드 신청하기</b></div>
         </button>
+        <div class="pager"><i class="on"></i><i></i><i></i><i></i><i></i></div>
       </div>
 
       <div class="card quick">
         <button data-go="acct"><div class="q">🪙</div>내 자산</button>
         <button data-toast="자동이체는 다음 수업에서 배워요"><div class="q">🗓️</div>자동이체</button>
-        <button data-act="allowance"><div class="q">⚡</div>용돈받기</button>
-        <button data-toast="모의 앱에서는 결제 기능이 없어요"><div class="q">📱</div>새싹페이</button>
+        <button data-act="allowance"><div class="q">⚡</div>자동충전</button>
+        <button data-toast="모의 앱에서는 결제 기능이 없어요"><div class="q">📱<span class="rec">추천</span></div>새싹페이</button>
+        <span class="bubble">연습 혜택</span>
       </div>
 
       <div class="card sec">
         <h2>내 자산 <button data-go="set">편집 ⚙</button></h2>
         <h3>계좌</h3>
         <div id="assetRows"></div>
+        <div class="row" id="oldRow"><div class="rnd">💠</div><button data-act="send" style="text-align:left"><small>보낸지 오래된 계좌 찾고</small><b>이체하기</b></button><button class="xx" id="oldX">✕</button></div>
+        <div class="divider"></div>
+        <h3 style="padding-top:22px">대출</h3>
+        <button class="row" data-toast="모의 대출은 다음 수업에서 배워요"><div class="rnd">🧾</div><div><small>모의 연습대출</small><b>0원</b></div></button>
         <button class="more" data-go="acct">내 자산 모두 보기 ›</button>
       </div>
 
-      <div class="foot"><button data-go="set">이름 바꾸기</button> &nbsp;|&nbsp; <button data-go="set">홈 화면 설정</button></div>
+      <div class="card recs">
+        <small><span class="uname"></span>님을 위한</small>
+        <h2>실시간 추천 서비스예요</h2>
+        <div class="g">
+          <button data-toast="모의 앱에서는 카드를 발급하지 않아요"><span class="rk">1위</span><span class="em">💳</span><b>연습카드</b><span class="t">수업용<br>체크카드 체험</span></button>
+          <button data-sendto="exch"><span class="rk">2위</span><span class="em">🏠</span><b>모의 거래소</b><span class="t">쉽고 편리한<br>가상자산 연습</span></button>
+          <button data-act="pull"><span class="rk">3위</span><span class="em">🧳</span><b>연습 저금통</b><span class="t">모아둔 돈<br>가져오기</span></button>
+        </div>
+      </div>
+
+      <button class="fb" data-toast="의견은 선생님께 말해 주세요"><span style="font-size:20px">✎</span><div><small>새로워진 새싹뱅크 홈</small><b><span class="uname"></span>님의 의견이 궁금해요</b></div><span class="ar">›</span></button>
+
+      <div class="foot"><button data-toast="간편 홈 모드는 준비 중이에요">간편 홈 모드</button> &nbsp;&nbsp;|&nbsp;&nbsp; <button data-go="set">홈 화면 설정</button></div>
     </div>
   </section>
 
@@ -186,13 +226,13 @@ input{font:inherit}
       </div>
       <div class="four">
         <button data-act="pull"><div class="q">👛</div>저금통</button>
-        <button data-toast="입출금리워드는 모의 앱에 없어요"><div class="q">⭐</div>리워드</button>
+        <button data-toast="입출금리워드는 모의 앱에 없어요"><div class="q">⭐</div>입출금리워드</button>
         <button data-toast="모의 앱에서는 카드를 발급하지 않아요"><div class="q">💳</div>체크카드</button>
-        <button data-act="allowance"><div class="q">⚡</div>용돈받기</button>
+        <button data-act="allowance"><div class="q">⚡</div>자동충전</button>
       </div>
     </div>
     <div class="gap"></div>
-    <div class="filter"><span class="s">🔍</span><span>전체 · 입출금 · 최신순 ⌄</span></div>
+    <div class="filter"><span class="s">🔍</span><span>3개월 · 입출금 · 최신순 ⌄</span></div>
     <div id="txList"></div>
   </section>
 
@@ -217,11 +257,11 @@ input{font:inherit}
   </section>
 
   <nav class="tabs" id="tabs">
-    <button class="on" data-go="home"><i></i>홈</button>
-    <button data-toast="상품 탭은 준비 중이에요"><i></i>상품</button>
-    <button data-toast="혜택 탭은 준비 중이에요"><i></i>혜택</button>
-    <button data-toast="서비스 탭은 준비 중이에요"><i></i>서비스</button>
-    <button data-go="set"><i></i>전체</button>
+    <button class="on" data-go="home"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 11.5 12 4l8 7.5V20a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1Z"/></svg>홈</button>
+    <button data-toast="상품 탭은 준비 중이에요"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 8h14l1 12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm4 0V6a3 3 0 0 1 6 0v2" fill-rule="evenodd"/></svg>상품</button>
+    <button data-toast="혜택 탭은 준비 중이에요"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9h8v4H3Zm10 0h8v4h-8ZM4.5 14.5H11V21H5.5a1 1 0 0 1-1-1Zm8.5 0h6.500V20a1 1 0 0 1-1 1H13ZM12 8S9 3 7 5s5 3 5 3 3-5 5-3-5 3-5 3Z"/></svg>혜택</button>
+    <button data-toast="서비스 탭은 준비 중이에요"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Zm6 4.500-1.400 2.900-3.100.400 2.300 2.200-.600 3.100 2.800-1.500 2.800 1.500-.600-3.100 2.300-2.200-3.100-.400Z" fill-rule="evenodd"/></svg>서비스</button>
+    <button data-go="set"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5.500h16v2.500H4Zm0 5.250h16v2.500H4Zm0 5.250h16v2.500H4Z"/></svg>전체</button>
   </nav>
   <div class="toast" id="toast"></div>
 </div>
@@ -273,6 +313,7 @@ function render(){
   $('acctBal').textContent=won(S.bal.main);
   $('notice').style.display=S.notice?'flex':'none';
   $('badge').style.display=S.notice?'block':'none';
+  $('oldRow').style.display=S.old===false?'none':'flex';
   $('nameIn').value=S.name;
   $('assetRows').innerHTML=['piggy','exch'].map(function(k){
     return '<div class="row"><div class="rnd">'+ACC[k].icon+'</div><div><small>'+ACC[k].name+'</small><b>'+won(S.bal[k])+'</b></div>'+
@@ -349,7 +390,7 @@ document.addEventListener('click',function(e){
   if(d.sendto){startFlow('send',d.sendto);F.fixed=true;return}
   if(d.act==='send')return startFlow('send');
   if(d.act==='pull')return startFlow('pull');
-  if(d.act==='allowance'){addTx('선생님(연습용 용돈)',1000000);save();render();return toast('연습용 용돈 100만원이 들어왔어요')}
+  if(d.act==='allowance'){addTx('선생님(연습용 용돈)',1000000);save();render();return toast('연습용 돈 100만원이 충전됐어요')}
   if(d.pick){F.to={key:d.pick,label:ACC[d.pick].name};F.step='amt';return drawFlow()}
   if(d.k){
     if(d.k==='←')F.amt=F.amt.slice(0,-1);
@@ -368,6 +409,7 @@ document.addEventListener('click',function(e){
   }
   if(t.id==='fDo')return execFlow();
   if(t.id==='flowBack')return flowBack();
+  if(t.id==='oldX'){S.old=false;save();return render()}
   if(t.id==='noticeX'){S.notice=false;save();return render()}
   if(t.id==='copyNo'){if(navigator.clipboard)navigator.clipboard.writeText(S.no).catch(function(){});return toast('계좌번호를 복사했어요')}
   if(t.id==='saveName'){var v=$('nameIn').value.trim();if(!v)return toast('이름을 입력해 주세요');S.name=v;save();toast('저장했어요');return go('home')}
