@@ -221,6 +221,23 @@ input{font:inherit}
 .menu .dot::after{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--red);vertical-align:top;margin-left:3px}
 .hr{border-top:1px solid var(--line);margin:0 20px}
 .bot{position:absolute;right:18px;bottom:86px;width:50px;height:50px;border-radius:50%;background:#101828;font-size:24px;z-index:5;box-shadow:0 3px 10px rgba(0,0,0,.25)}
+.kv{padding:14px 0 18px}
+.kv div{display:flex;justify-content:space-between;padding:10px 20px;font-size:15px}
+.kv span{color:var(--sub)}
+.sech{background:#f4f6f9;color:#6b7480;font-size:14px;padding:22px 20px 10px}
+.mrow{display:flex;justify-content:space-between;align-items:center;width:100%;padding:18px 20px;font-size:17px;font-weight:500;border-bottom:1px solid var(--line);text-align:left}
+.mrow span{color:var(--sub);font-weight:400;font-size:15px}
+.seg{display:grid;gap:8px}
+.seg button{border:1px solid #cfd6dd;border-radius:10px;padding:14px 0;font-size:16px;background:#fff}
+.seg button.on{border-color:var(--brand);background:var(--brand-soft);color:var(--brand);font-weight:700}
+.flabel{font-size:15px;margin:22px 0 10px}
+.ebox{display:block;border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.ebox small{display:block;color:var(--sub);font-size:12px}
+.ebox input{border:0;outline:0;width:100%;font-size:16px;padding:6px 0 2px;background:none}
+.notes{margin-top:44px}
+.notes b{font-size:17px}
+.notes p{margin:8px 0 0;font-size:14px;color:#555;line-height:1.5;padding-left:12px;text-indent:-12px}
+#expRes .tx{margin:0}
 </style>
 </head>
 <body>
@@ -297,7 +314,7 @@ input{font:inherit}
 
   <!-- 계좌 상세 -->
   <section class="screen white" id="s-acct">
-    <div class="nav"><button class="back" data-go="home"><svg viewBox="0 0 24 24" fill="none" stroke="#16191d" stroke-width="2"><path d="M15 4 7 12l8 8"/></svg></button><button data-go="set">관리</button></div>
+    <div class="nav"><button class="back" data-go="home"><svg viewBox="0 0 24 24" fill="none" stroke="#16191d" stroke-width="2"><path d="M15 4 7 12l8 8"/></svg></button><button data-go="mng">관리</button></div>
     <div class="detail-h">
       <h2>MY 입출금통장</h2>
       <button class="no" id="copyNo"><span class="mainNo"></span> ⧉</button>
@@ -430,6 +447,55 @@ input{font:inherit}
     </div>
   </section>
 
+  <!-- 계좌 관리 -->
+  <section class="screen white" id="s-mng">
+    <div class="nav"><button class="back" data-go="acct"><svg viewBox="0 0 24 24" fill="none" stroke="#16191d" stroke-width="2"><path d="M15 4 7 12l8 8"/></svg></button><span></span></div>
+    <div class="detail-h" style="padding-bottom:6px">
+      <h2>MY 입출금통장 <button data-go="set" style="font-size:20px" aria-label="이름 바꾸기">✎</button></h2>
+      <span class="no mainNo"></span>
+    </div>
+    <div class="kv">
+      <div><span>상품명</span><b style="font-weight:500">MY 입출금통장</b></div>
+      <div><span>적용금리</span><b style="font-weight:500">연 0.10%</b></div>
+      <div><span>가입일</span><b style="font-weight:500" id="joined"></b></div>
+    </div>
+    <div class="sech">모임서비스</div>
+    <button class="mrow" data-toast="모임통장은 준비 중이에요">모임통장<span>사용하기 ›</span></button>
+    <div class="sech">계좌관리</div>
+    <button class="mrow" data-act="allowance">자동충전<span>›</span></button>
+    <button class="mrow" data-toast="숨길 혜택 내역이 없어요">혜택 내역 보기/숨기기<span>›</span></button>
+    <button class="mrow" data-toast="모의 앱에는 비밀번호가 없어요">계좌비밀번호 변경<span>›</span></button>
+    <button class="mrow" data-toast="모의 앱에서는 알림을 보내지 않아요">입출금통지<span>›</span></button>
+    <button class="mrow" data-go="exp">입출금내역 내보내기<span>›</span></button>
+    <button class="mrow" data-toast="모의 앱에서는 증명서를 발급하지 않아요">거래내역증명서 발급<span>›</span></button>
+    <button class="mrow" data-go="set">계좌해지<span>›</span></button>
+  </section>
+
+  <!-- 입출금내역 내보내기 -->
+  <section class="screen white" id="s-exp">
+    <div class="nav"><button class="back" id="expBack"><svg viewBox="0 0 24 24" fill="none" stroke="#16191d" stroke-width="2"><path d="M15 4 7 12l8 8"/></svg></button><span></span></div>
+    <div class="flow" id="expForm">
+      <h2 style="margin-bottom:6px">내보낼 입출금내역의<br>정보를 확인해주세요</h2>
+      <div class="flabel">입출금내역 기간</div>
+      <div class="seg" style="grid-template-columns:repeat(4,1fr)" id="segPer">
+        <button class="on" data-per="1">1개월</button><button data-per="3">3개월</button><button data-per="6">6개월</button><button data-toast="직접선택은 준비 중이에요">직접선택</button>
+      </div>
+      <div class="flabel">거래유형</div>
+      <div class="seg" style="grid-template-columns:repeat(3,1fr)" id="segTyp">
+        <button class="on" data-typ="all">전체</button><button data-typ="in">입금만</button><button data-typ="out">출금만</button>
+      </div>
+      <div class="flabel">받을 이메일</div>
+      <label class="ebox"><small>이메일</small><input id="expMail" type="email" inputmode="email" autocomplete="off" placeholder="example@school.kr"></label>
+      <div class="notes">
+        <b>확인해주세요</b>
+        <p>· 모의 앱에서는 이메일을 실제로 보내지 않고, 내보낸 내역을 화면에서 바로 보여 줘요.</p>
+        <p>· 이 내역은 수업 참고용이며, 증명서로는 쓸 수 없어요.</p>
+      </div>
+      <div style="margin-top:auto;padding-top:24px"><button class="cta" id="expDo">내보내기</button></div>
+    </div>
+    <div class="flow" id="expRes" style="display:none"></div>
+  </section>
+
   <!-- 설정 -->
   <section class="screen white" id="s-set">
     <div class="nav"><button class="back" data-go="home"><svg viewBox="0 0 24 24" fill="none" stroke="#16191d" stroke-width="2"><path d="M15 4 7 12l8 8"/></svg></button><span></span></div>
@@ -500,12 +566,13 @@ var toastT;
 function toast(m){var t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},1800)}
 
 function go(name){
-  ['home','acct','flow','set','prod','bene','svc','hist','all'].forEach(function(s){$('s-'+s).classList.toggle('on',s===name)});
+  ['home','acct','flow','set','prod','bene','svc','hist','all','mng','exp'].forEach(function(s){$('s-'+s).classList.toggle('on',s===name)});
   var tab=['home','prod','bene','svc','all'].indexOf(name)>=0;
   $('tabs').style.display=tab?'flex':'none';
   $('bot').style.display=name==='all'?'block':'none';
   if(tab)document.querySelectorAll('#tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.go===name)});
   $('s-'+name).scrollTop=0;
+  if(name==='exp')expShow(false);
   render();
 }
 
@@ -571,8 +638,32 @@ function renderTabs(){
       '<div class="r"><span>'+esc(x.no)+'</span><span>성공</span></div></div>';
   }).join(''):'<div class="empty">이체 내역이 없어요</div>';
 }
+/* 입출금내역 내보내기 */
+var EX={per:1,typ:'all'};
+function expShow(res){$('expForm').style.display=res?'none':'flex';$('expRes').style.display=res?'flex':'none';$('s-exp').scrollTop=0}
+function expRun(){
+  var from=new Date();from.setMonth(from.getMonth()-EX.per);
+  var list=S.tx.filter(function(x){return x.t>=from.getTime()&&(EX.typ==='all'||(EX.typ==='in'?x.amt>0:x.amt<0))});
+  var tin=0,tout=0;list.forEach(function(x){if(x.amt>0)tin+=x.amt;else tout-=x.amt});
+  var f=function(d){return d.getFullYear()+'.'+p2(d.getMonth()+1)+'.'+p2(d.getDate())};
+  var mail=$('expMail').value.trim();
+  $('expRes').innerHTML='<h2 style="margin-bottom:6px">입출금내역 '+list.length+'건을<br>내보냈어요</h2>'+
+    '<div class="hint">'+(mail?esc(mail)+' (모의 앱이라 실제로 보내지는 않았어요)':'모의 앱이라 이메일은 보내지 않았어요')+'</div>'+
+    '<div class="sum" style="margin-top:16px"><div><span>기간</span><b>'+f(from)+' ~ '+f(new Date())+'</b></div>'+
+    '<div><span>거래유형</span><b>'+({all:'전체',in:'입금만',out:'출금만'})[EX.typ]+'</b></div>'+
+    '<div><span>입금 합계</span><b style="color:var(--plus)">+'+won(tin)+'</b></div>'+
+    '<div><span>출금 합계</span><b>-'+won(tout)+'</b></div></div>'+
+    (list.length?list.map(function(x){var d=new Date(x.t);
+      return '<div class="tx"><div class="d">'+p2(d.getMonth()+1)+'.'+p2(d.getDate())+'<i>'+p2(d.getHours())+':'+p2(d.getMinutes())+'</i></div>'+
+      '<div class="l"><span>'+esc(x.who)+'</span><b class="'+(x.amt>0?'in':'')+'">'+(x.amt>0?'+':'')+won(x.amt)+'</b></div>'+
+      '<div class="r">잔액 '+won(x.bal)+'</div></div>'}).join(''):'<div class="empty">해당하는 내역이 없어요</div>')+
+    '<button class="cta ghost" data-go="acct" style="margin-top:20px">확인</button>';
+  expShow(true);
+}
 function render(){
   renderTabs();
+  if(!S.joined){S.joined=Date.now();save()}
+  var jd=new Date(S.joined);$('joined').textContent=jd.getFullYear()+'.'+p2(jd.getMonth()+1)+'.'+p2(jd.getDate());
   document.querySelectorAll('.uname').forEach(function(e){e.textContent=S.name});
   document.querySelectorAll('.mainNo').forEach(function(e){e.textContent=S.no});
   $('homeBal').textContent=won(S.bal.main);
@@ -661,6 +752,12 @@ document.addEventListener('click',function(e){
     if(S.rewardDay===day)return toast('오늘은 이미 받았어요. 내일 다시 눌러 보세요');
     var n=1+Math.floor(Math.random()*7);S.rewardDay=day;addTx('버튼 누르기 리워드',n);save();render();return toast(n+'원을 받았어요');
   }
+  if(d.per||d.typ){
+    if(d.per)EX.per=Number(d.per);else EX.typ=d.typ;
+    t.parentNode.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b===t)});return;
+  }
+  if(t.id==='expDo')return expRun();
+  if(t.id==='expBack')return $('expRes').style.display==='flex'?expShow(false):go('mng');
   if(d.cat){cat=d.cat;return render()}
   if(d.svc){svc=d.svc;return render()}
   if(d.act==='allowance'){addTx('선생님(연습용 용돈)',1000000);save();render();return toast('연습용 돈 100만원이 충전됐어요')}
