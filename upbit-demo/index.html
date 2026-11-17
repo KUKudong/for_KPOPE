@@ -488,14 +488,8 @@ function vHistory() {
 
 /* ---------- 더보기 ---------- */
 function vMore() {
-  const m = [[S.deposited, "모의 은행에서 KRW 입금하기", "입출금 → KRW 입금"],
-    [S.bought, "전송에 쓸 코인 매수하기", "거래소 → 코인 선택 → 매수 (XRP·TRX·USDT 추천)"],
-    [S.withdrew, "모의 바이낸스 입금 주소로 출금하기", "입출금 → 코인 → 출금하기 (네트워크·주소·태그 확인)"],
-    [S.hist.some(h => h.tx && h.tx.done), "출금 완료 확인하고 TXID 살펴보기", "투자내역에서 출금 건을 눌러 보세요"]];
   return `<div class="head">더보기</div>
   <div class="pad" style="padding-top:0">
-    <h3 style="margin:0 0 6px">학습 미션: 은행 → 국내 거래소 → 해외 거래소</h3>
-    <ul class="mission">${m.map(([ok, t, d], i) => `<li class="${ok ? "done" : ""}">${ok ? "✅" : "⬜"} ${i + 1}. ${t}<br><span class="sub small">　 ${d}</span></li>`).join("")}</ul>
     <div class="note"><b>이 앱에 대해</b><br>
       학생들의 모의투자 수업을 위한 <b>교육용 시뮬레이터</b>입니다. 업비트(두나무)와 아무 관련이 없는 비공식 연습 도구이며,
       실제 계좌·거래소·블록체인과 연결되지 않습니다. 시세, 잔고, 주소, TXID는 모두 가상이고 이 기기의 브라우저에만 저장됩니다.
