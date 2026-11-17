@@ -6,8 +6,8 @@
 <title>모의 거래소 (교육용 데모)</title>
 <style>
   :root {
-    --bg: #0a1224; --panel: #101a30; --line: #1c2740; --text: #e8ecf3; --sub: #7f8aa3;
-    --blue: #1763e0; --navy: #0b327f; --up: #e0454d; --down: #3b82f6; --warn: #f5a524;
+    --bg: #0b1120; --panel: #111a2e; --line: #1b2439; --text: #e8ecf3; --sub: #7f8aa3;
+    --blue: #1261e6; --navy: #093687; --up: #e0454d; --down: #3b82f6; --warn: #f5a524;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; height: 100%; background: #05080f; color: var(--text);
@@ -20,7 +20,7 @@
     text-align: center; padding: 5px 8px; flex: none; }
   #view { flex: 1; overflow-y: auto; }
   .tabbar { flex: none; display: flex; background: var(--navy); padding-bottom: env(safe-area-inset-bottom); }
-  .tabbar button { flex: 1; padding: 10px 0 9px; font-size: 12px; color: #b9c6e6; }
+  .tabbar button { flex: 1; padding: 10px 0 9px; font-size: 12px; color: #a9bbe6; }
   .tabbar button.on { color: #fff; font-weight: 700; }
   .tabbar .ico { display: block; font-size: 18px; margin-bottom: 2px; }
   .head { display: flex; align-items: center; gap: 8px; padding: 14px 16px; font-size: 19px; font-weight: 700; }
@@ -67,6 +67,32 @@
   .badge.ok { background: #10331f; color: #5fd38d; }
   .mission li { padding: 8px 0; list-style: none; font-size: 14px; } .mission { padding: 0; margin: 0; }
   .mission .done { color: #5fd38d; } .mono { font-family: ui-monospace, Menlo, Consolas, monospace; word-break: break-all; }
+  .top { display: flex; align-items: center; justify-content: center; padding: 12px 16px 8px; position: relative; min-height: 54px; }
+  .top .title { position: absolute; left: 16px; font-size: 20px; font-weight: 700; }
+  .top .tools { position: absolute; right: 14px; font-size: 20px; } .top .tools button { color: #c9d2e6; }
+  .pill { display: inline-flex; align-items: center; gap: 4px; font-size: 16px; }
+  .pill b { background: #e6e9ef; color: #0b1120; padding: 6px 16px; border-radius: 18px; }
+  .pill button { padding: 6px 14px; color: #c9d2e6; }
+  .search { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-bottom: 2px solid #c9d2e6; }
+  .search input { flex: 1; background: none; border: 0; outline: none; font-size: 16px; min-width: 0; }
+  .search select { background: var(--panel); border: 0; border-radius: 4px; padding: 8px 10px; }
+  .mtabs { display: inline-flex; margin: 10px 16px; border: 1px solid #2b3653; border-radius: 4px; overflow: hidden; }
+  .mtabs button { padding: 7px 14px; color: var(--sub); border-right: 1px solid #2b3653; font-size: 15px; }
+  .mtabs button:last-child { border-right: 0; } .mtabs button.on { color: #3b8bff; box-shadow: inset 0 0 0 1px #3b8bff; }
+  .mrow { padding: 10px 12px; align-items: flex-start; } .mrow .name { flex: 1.5; } .mrow .col { font-size: 14px; }
+  .mrow .vol { font-size: 13px; color: #d5dbe8; } .thead { padding: 8px 12px; } .thead span:first-child { padding-left: 16px; }
+  .cdl { width: 9px; height: 28px; margin: 2px 7px 0 0; flex: none; background: linear-gradient(#2a3550, #2a3550) center/1px 100% no-repeat; position: relative; }
+  .cdl::after { content: ""; position: absolute; left: 0; right: 0; top: 12px; height: 2px; background: #8892a8; }
+  .cdl.up::after { top: 6px; height: 14px; background: var(--up); } .cdl.down::after { top: 10px; height: 12px; background: var(--down); }
+  .chev { color: var(--sub); margin-left: 10px; font-size: 18px; }
+  .sub5 button { padding: 10px 0; font-size: 14px; }
+  .ogrid { display: grid; grid-template-columns: 40% 60%; border-bottom: 1px solid var(--line); }
+  #ob { border-right: 1px solid var(--line); font-size: 12px; }
+  .ob { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; border-bottom: 1px solid var(--bg); min-height: 36px; }
+  .ob.a { background: #0f1d3a; } .ob.b { background: #2a1420; } .ob i { font-style: normal; font-size: 10px; opacity: .8; }
+  .ob em { font-style: normal; color: #aab3c8; font-size: 11px; } .ob span { font-weight: 600; }
+  .oform { padding: 0 10px 12px; min-width: 0; } .oform .seg { margin: 0 -10px 8px; } .oform .chips button { font-size: 12px; padding: 7px 2px; }
+  .oform .in { padding: 10px; } .oform .btn { padding: 12px; }
   /* PIN */
   #pin { position: absolute; inset: 0; background: var(--navy); z-index: 10; display: flex; flex-direction: column;
     align-items: center; padding: 60px 0 20px; }
@@ -101,20 +127,20 @@ const MIN_ORDER = 5000;       // 최소 주문 금액 (예시)
 
 // 가상 시세의 시작값과 네트워크 정보. 수수료는 학습용 예시 값입니다.
 const COINS = [
-  { s: "USDT", n: "테더", c: "#26a17b", p: 1359, nets: [
+  { s: "USDT", v: 114698, n: "테더", c: "#26a17b", p: 1359, nets: [
       { id: "TRC20", label: "Tron (TRC20)", fee: 1, re: /^T[1-9A-HJ-NP-Za-km-z]{33}$/ },
       { id: "ERC20", label: "Ethereum (ERC20)", fee: 8, re: /^0x[0-9a-fA-F]{40}$/ } ] },
-  { s: "XRP", n: "엑스알피(리플)", c: "#3a4250", p: 1326, tag: true, nets: [
+  { s: "XRP", v: 89930, n: "엑스알피(리플)", c: "#3a4250", p: 1326, tag: true, nets: [
       { id: "XRP", label: "XRP Ledger", fee: 1, re: /^r[1-9A-HJ-NP-Za-km-z]{24,34}$/ } ] },
-  { s: "TRX", n: "트론", c: "#c23631", p: 412, nets: [
+  { s: "TRX", v: 8204, n: "트론", c: "#c23631", p: 412, nets: [
       { id: "TRC20", label: "Tron (TRC20)", fee: 1, re: /^T[1-9A-HJ-NP-Za-km-z]{33}$/ } ] },
-  { s: "BTC", n: "비트코인", c: "#f7931a", p: 88429000, nets: [
+  { s: "BTC", v: 88628, n: "비트코인", c: "#f7931a", p: 88429000, nets: [
       { id: "BTC", label: "Bitcoin", fee: 0.0008, re: /^(bc1[0-9a-z]{25,60}|[13][1-9A-HJ-NP-Za-km-z]{25,34})$/ } ] },
-  { s: "ETH", n: "이더리움", c: "#627eea", p: 2482000, nets: [
+  { s: "ETH", v: 49364, n: "이더리움", c: "#627eea", p: 2482000, nets: [
       { id: "ERC20", label: "Ethereum (ERC20)", fee: 0.009, re: /^0x[0-9a-fA-F]{40}$/ } ] },
-  { s: "SOL", n: "솔라나", c: "#7c4dff", p: 100400, nets: [
+  { s: "SOL", v: 26799, n: "솔라나", c: "#7c4dff", p: 100400, nets: [
       { id: "SOL", label: "Solana", fee: 0.01, re: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/ } ] },
-  { s: "DOGE", n: "도지코인", c: "#b59a30", p: 80.9, nets: [
+  { s: "DOGE", v: 10129, n: "도지코인", c: "#b59a30", p: 80.9, nets: [
       { id: "DOGE", label: "Dogecoin", fee: 4, re: /^D[1-9A-HJ-NP-Za-km-z]{33}$/ } ] },
 ];
 const coin = s => COINS.find(c => c.s === s);
@@ -134,6 +160,7 @@ const $ = id => document.getElementById(id);
 const esc = v => String(v).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
 const won = v => Math.floor(v).toLocaleString("ko-KR");
 const fp = v => v >= 100 ? Math.round(v).toLocaleString("ko-KR") : v >= 1 ? v.toFixed(1) : v.toFixed(3);
+const fd = v => (v > 0 ? "+" : v < 0 ? "-" : "") + fp(Math.abs(v));
 const fq = v => (+(+v).toFixed(8)).toLocaleString("ko-KR", { maximumFractionDigits: 8 });
 const num = v => { const n = parseFloat(String(v).replace(/,/g, "")); return isFinite(n) ? n : 0; };
 const B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
@@ -161,7 +188,7 @@ const totalBuy = () => COINS.reduce((a, c) => a + (S.bal[c.s] ? S.bal[c.s].q * S
 
 /* ---------- 라우터 ---------- */
 let route = { tab: "market" };
-const TABS = [["market", "📈", "거래소"], ["history", "🧾", "투자내역"], ["wallet", "⇄", "입출금"], ["more", "▦", "더보기"]];
+const TABS = [["market", "📈", "거래소"], ["info", "📊", "코인정보"], ["history", "🧾", "투자내역"], ["wallet", "⇄", "입출금"], ["more", "▦", "더보기"]];
 function go(r) { route = r; render(); $("view").scrollTop = 0; }
 function render() {
   $("tabbar").innerHTML = TABS.map(([k, i, l]) =>
@@ -172,50 +199,80 @@ function render() {
   else if (route.page === "asset") v.innerHTML = vAsset();
   else if (route.page === "withdraw") v.innerHTML = vWithdraw();
   else if (route.page === "result") v.innerHTML = vResult();
-  else v.innerHTML = ({ market: vMarket, history: vHistory, wallet: vWallet, more: vMore })[route.tab]();
+  else v.innerHTML = ({ market: vMarket, info: vInfo, history: vHistory, wallet: vWallet, more: vMore })[route.tab]();
   if (route.page === "order") calcOrder();
   if (route.page === "withdraw") calcWd();
 }
 
 /* ---------- 거래소 ---------- */
 function chg(s) { const d = price[s] - base[s]; return { d, pct: d / base[s] * 100, cls: d > 0 ? "up" : d < 0 ? "down" : "" }; }
-function vMarket() {
-  const ev = totalEval(), by = totalBuy(), pl = ev - by;
-  return `<div class="head">거래소 <span class="badge">가상 시세</span></div>
-  <div class="summary">
-    <div><span class="sub">총 매수</span><span>${won(by)}</span></div>
-    <div><span class="sub">평가손익</span><span id="m-pl" class="${pl > 0 ? "up" : pl < 0 ? "down" : ""}">${won(pl)}</span></div>
-    <div><span class="sub">총 평가</span><span id="m-ev">${won(ev)}</span></div>
-    <div><span class="sub">보유 KRW</span><span>${won(S.krw)}</span></div>
-  </div>
-  <div class="thead"><span>한글명</span><span>현재가</span><span>전일대비</span></div>
-  ${COINS.map(c => { const g = chg(c.s); return `<button class="row" data-order="${c.s}">
+const match = (c, q) => !q || c.n.toLowerCase().includes(q) || c.s.toLowerCase().includes(q);
+function marketRows() {
+  const q = (route.q || "").trim().toLowerCase(), list = COINS.filter(c => match(c, q));
+  if (!list.length) return `<div class="pad sub">검색 결과가 없습니다.</div>`;
+  return list.map(c => { const g = chg(c.s); return `<button class="row mrow" data-order="${c.s}">
+    <span class="cdl ${g.cls}" data-k="${c.s}"></span>
     <span class="name"><b>${c.n}</b><span class="sub small">${c.s}/KRW</span></span>
     <span class="col ${g.cls}" data-p="${c.s}">${fp(price[c.s])}</span>
-    <span class="col ${g.cls}" data-c="${c.s}">${g.pct.toFixed(2)}%</span></button>`; }).join("")}
-  <div class="pad sub small">시세는 무작위로 움직이는 가상 값이며 실제 시장 가격과 무관합니다.</div>`;
+    <span class="col ${g.cls}"><span data-c="${c.s}">${g.pct.toFixed(2)}%</span><br><span class="small" data-d="${c.s}">${fd(g.d)}</span></span>
+    <span class="col vol">${c.v.toLocaleString("ko-KR")}<span class="small">백만</span></span></button>`; }).join("");
+}
+function vMarket() {
+  const ev = totalEval(), by = totalBuy(), pl = ev - by, r = by ? pl / by * 100 : 0, cls = pl > 0 ? "up" : pl < 0 ? "down" : "";
+  return `<div class="top"><span class="pill"><b>거래소</b><button data-soon>NFT</button></span>
+    <span class="tools"><button data-go="more">⚙</button></span></div>
+  <div class="search"><span>🔍</span><input id="m-q" placeholder="코인명/심볼 검색" value="${esc(route.q || "")}" autocomplete="off"></div>
+  <div class="summary">
+    <div><span class="sub">총 매수</span><span>${won(by)}</span></div>
+    <div><span class="sub">평가손익</span><span id="m-pl" class="${cls}">${won(pl)}</span></div>
+    <div><span class="sub">총 평가</span><span id="m-ev">${won(ev)}</span></div>
+    <div><span class="sub">수익률</span><span id="m-r" class="${cls}">${r.toFixed(2)}%</span></div>
+  </div>
+  <div class="mtabs"><button class="on">KRW</button><button data-soon>BTC</button><button data-soon>USDT</button><button data-soon>관심</button></div>
+  <div class="thead"><span>한글명 ⇄</span><span>현재가 ⇅</span><span>전일대비 ⇅</span><span>거래대금 ⇅</span></div>
+  <div id="m-list">${marketRows()}</div>
+  <div class="pad sub small">시세·거래대금은 무작위로 움직이는 가상 값이며 실제 시장과 무관합니다.</div>`;
+}
+
+/* ---------- 코인정보 ---------- */
+function vInfo() {
+  return `<div class="head">코인정보 <span class="badge">학습용 예시</span></div>
+  <div class="pad sub small" style="padding-top:0">코인마다 출금에 쓰는 네트워크와 수수료가 다릅니다. 보내는 쪽과 받는 쪽 네트워크가 같아야 합니다.</div>
+  ${COINS.map(c => `<button class="row" data-order="${c.s}">${icon(c)}
+    <span class="name"><b>${c.n} <span class="sub small">${c.s}</span></b>
+      <span class="sub small">${c.nets.map(n => `${n.label} · 수수료 ${fq(n.fee)} ${c.s}`).join("<br>")}</span></span>
+    <span class="col">${c.tag ? `<span class="badge">태그 필수</span>` : ""}</span></button>`).join("")}`;
 }
 
 /* ---------- 주문 ---------- */
+function obHtml(s) {
+  const p = price[s], step = p * 0.0006, row = (x, k) => { const pc = (x / base[s] - 1) * 100, cl = pc > 0 ? "up" : pc < 0 ? "down" : "";
+    return `<div class="ob ${k}"><span class="${cl}">${fp(x)}<br><i>${pc.toFixed(2)}%</i></span><em>${fq((Math.random() * 90000 / p * 1000 + 1).toFixed(3))}</em></div>`; };
+  let h = ""; for (let i = 6; i >= 1; i--) h += row(p + step * i, "a");
+  for (let i = 1; i <= 6; i++) h += row(p - step * (i - 1), "b"); return h;
+}
 function vOrder() {
   const c = coin(route.sym), side = route.side || "buy", g = chg(c.s);
-  return `<div class="head"><button class="back" data-go="market">‹</button>${c.n} <span class="sub small">${c.s}/KRW</span></div>
-  <div class="pad" style="padding-top:0"><span class="big ${g.cls}" data-p="${c.s}">${fp(price[c.s])}</span>
-    <span class="${g.cls}" data-c="${c.s}">${g.pct.toFixed(2)}%</span></div>
-  <div class="seg"><button class="${side === "buy" ? "on buy" : ""}" data-side="buy">매수</button>
-    <button class="${side === "sell" ? "on sell" : ""}" data-side="sell">매도</button></div>
-  <div class="pad">
+  return `<div class="head" style="padding-bottom:6px"><button class="back" data-go="market">‹</button>${c.n} <span class="sub small">(${c.s}/KRW)</span></div>
+  <div class="pad" style="padding-top:0;padding-bottom:8px"><span class="big ${g.cls}" data-p="${c.s}">${fp(price[c.s])}</span>
+    <span class="${g.cls} small">전일대비 <span data-c="${c.s}">${g.pct.toFixed(2)}%</span> <span data-d="${c.s}">${fd(g.d)}</span></span></div>
+  <div class="seg sub5"><button class="on">주문</button><button data-soon>호가</button><button data-soon>차트</button><button data-soon>시세</button><button data-soon>정보</button></div>
+  <div class="ogrid"><div id="ob">${obHtml(c.s)}</div>
+  <div class="oform">
+    <div class="seg"><button class="${side === "buy" ? "on buy" : ""}" data-side="buy">매수</button>
+      <button class="${side === "sell" ? "on sell" : ""}" data-side="sell">매도</button></div>
+    <div class="kv small"><span class="sub">○ 지정가</span><span>● 시장가</span></div>
     <div class="kv"><span class="sub">주문가능</span><span>${side === "buy" ? won(S.krw) + " KRW" : fq(qty(c.s)) + " " + c.s}</span></div>
-    <div class="kv"><span class="sub">주문유형</span><span>시장가 (현재가로 즉시 체결)</span></div>
-    <label class="f">${side === "buy" ? "매수 금액 (KRW)" : "매도 수량 (" + c.s + ")"}</label>
+    <label class="f" style="margin-top:6px">${side === "buy" ? "주문총액 (KRW)" : "주문수량 (" + c.s + ")"}</label>
     <input class="in" id="o-amt" inputmode="decimal" placeholder="0" autocomplete="off">
     <div class="chips">${[10, 25, 50, 100].map(p => `<button data-pct="${p}">${p}%</button>`).join("")}</div>
-    <div class="kv mt"><span class="sub">수수료 (0.05%, 예시)</span><span id="o-fee">0 KRW</span></div>
-    <div class="kv"><span class="sub">${side === "buy" ? "받는 수량" : "받는 금액"}</span><span id="o-out">-</span></div>
+    <div class="kv mt small"><span class="sub">수수료 0.05% (예시)</span><span id="o-fee">0 KRW</span></div>
+    <div class="kv small"><span class="sub">${side === "buy" ? "받는 수량" : "받는 금액"}</span><span id="o-out">-</span></div>
     <div class="err" id="o-err"></div>
     <button class="btn ${side === "buy" ? "red" : "sell"}" id="o-go">${side === "buy" ? "매수" : "매도"} (모의)</button>
-    ${c.s === "BTC" || c.s === "ETH" ? `<div class="note"><b>전송용으로는?</b> ${c.n}은 네트워크 수수료가 비싸고 느린 편입니다. 거래소 간 이동에는 수수료가 싸고 빠른 코인(예: XRP, TRX)이나 USDT를 쓰는 경우가 많습니다.</div>` : ""}
-  </div>`;
+    <div class="sub small mt">최소주문금액 5,000 KRW · 시장가는 현재가로 즉시 체결됩니다. 호가창은 가상입니다.</div>
+  </div></div>
+  ${c.s === "BTC" || c.s === "ETH" ? `<div class="pad" style="padding-top:0"><div class="note"><b>전송용으로는?</b> ${c.n}은 네트워크 수수료가 비싸고 느린 편입니다. 거래소 간 이동에는 수수료가 싸고 빠른 코인(예: XRP, TRX)이나 USDT를 쓰는 경우가 많습니다.</div></div>` : ""}`;
 }
 function orderVals() {
   const c = coin(route.sym), side = route.side || "buy", a = num($("o-amt").value), p = price[c.s];
@@ -246,16 +303,23 @@ function submitOrder() {
 }
 
 /* ---------- 입출금 ---------- */
+function walletRows() {
+  const q = (route.q || "").trim().toLowerCase(), own = route.f === "own";
+  const krwRow = (!q || "원화krw".includes(q)) && (!own || S.krw > 0) ? `<button class="row" data-page="krw"><span class="coin" style="background:#1447b8">₩</span>
+    <span class="name"><b>원화</b><span class="sub small">KRW</span></span><span class="col"><b>${won(S.krw)}</b></span><span class="chev">›</span></button>` : "";
+  const rows = COINS.filter(c => match(c, q) && (!own || qty(c.s) > 0)).map(c => `<button class="row" data-asset="${c.s}">${icon(c)}
+    <span class="name"><b>${c.n}</b><span class="sub small">${c.s}</span>${qty(c.s) > 0 ? `<br><span class="badge">출금가능</span>` : ""}</span>
+    <span class="col"><b>${fq(qty(c.s))}</b><br><span class="sub small" data-v="${c.s}">${won(qty(c.s) * price[c.s])} KRW</span></span><span class="chev">›</span></button>`).join("");
+  return krwRow + rows || `<div class="pad sub">표시할 자산이 없습니다.</div>`;
+}
 function vWallet() {
   const tot = S.krw + totalEval();
-  return `<div class="head">입출금</div>
-  <div class="pad" style="padding-top:0"><div class="sub small">총 보유자산</div><div class="big"><span id="w-tot">${won(tot)}</span> KRW</div>
-    <div class="mt"><button class="btn" data-page="krw">→ KRW 입금 (모의 은행)</button></div></div>
-  <button class="row" data-page="krw">${`<span class="coin" style="background:#1447b8">₩</span>`}
-    <span class="name"><b>원화</b><span class="sub small">KRW</span></span><span class="col"><b>${won(S.krw)}</b></span></button>
-  ${COINS.map(c => `<button class="row" data-asset="${c.s}">${icon(c)}
-    <span class="name"><b>${c.n}</b><span class="sub small">${c.s}</span></span>
-    <span class="col"><b>${fq(qty(c.s))}</b><br><span class="sub small" data-v="${c.s}">${won(qty(c.s) * price[c.s])} KRW</span></span></button>`).join("")}`;
+  return `<div class="top"><span class="title">입출금</span><span class="tools"><button data-go="more">⚙</button></span></div>
+  <div class="pad" style="padding-top:4px"><div class="sub small">총 보유자산 👁</div><div class="big"><span id="w-tot">${won(tot)}</span> KRW</div>
+    <div class="btns mt"><button class="btn ghost" data-go="more">Ⓑ 학습 미션</button><button class="btn" data-page="krw">⇥ KRW 입금</button></div></div>
+  <div class="search"><span>🔍</span><input id="w-q" placeholder="코인명/심볼 검색" value="${esc(route.q || "")}" autocomplete="off">
+    <select id="w-f"><option value="">전체</option><option value="own"${route.f === "own" ? " selected" : ""}>보유</option></select></div>
+  <div id="w-list">${walletRows()}</div>`;
 }
 function vKrw() {
   return `<div class="head"><button class="back" data-go="wallet">‹</button>KRW 입금</div>
@@ -448,6 +512,7 @@ $("pin").addEventListener("click", ev => {
 $("tabbar").addEventListener("click", ev => { const b = ev.target.closest("[data-go]"); if (b) go({ tab: b.dataset.go }); });
 $("view").addEventListener("click", ev => {
   const t = ev.target.closest("button"); if (!t) return; const d = t.dataset;
+  if ("soon" in d) return toast("데모에서는 지원하지 않는 메뉴입니다");
   if (d.go) return go({ tab: d.go });
   if (d.order) return go({ tab: "market", page: "order", sym: d.order, side: "buy" });
   if (d.side) return go({ ...route, side: d.side });
@@ -456,13 +521,13 @@ $("view").addEventListener("click", ev => {
   if (d.wd) return go({ tab: "wallet", page: "withdraw", sym: d.wd });
   if (d.tx) return go({ tab: "wallet", page: "result", txid: d.tx });
   if (d.pct) { const side = route.side || "buy", p = +d.pct / 100;
-    $("o-amt").value = side === "buy" ? Math.floor(S.krw * p) : +(qty(route.sym) * p).toFixed(8); return calcOrder(); }
+    $("o-amt").value = side === "buy" ? Math.floor(S.krw * p) : Math.floor(qty(route.sym) * p * 1e8) / 1e8; return calcOrder(); }
   if (d.add) { $("k-amt").value = Math.floor(num($("k-amt").value)) + +d.add; return; }
   switch (t.id) {
     case "o-go": return submitOrder();
     case "k-go": return submitKrw();
     case "w-go": return submitWd();
-    case "w-max": { const w = wdVals(); $("w-amt").value = Math.max(0, +(qty(w.c.s) - w.net.fee).toFixed(8)); return calcWd(); }
+    case "w-max": { const w = wdVals(); $("w-amt").value = Math.max(0, Math.floor((qty(w.c.s) - w.net.fee) * 1e8) / 1e8); return calcWd(); }
     case "w-sample": $("w-addr").value = sampleAddr($("w-net").value); if ($("w-tag")) $("w-tag").value = Math.floor(1e8 + Math.random() * 9e8);
       return toast("형식만 맞춘 가짜 주소입니다 (연습용)");
     case "r-copy": { const tx = $("r-tx").textContent;
@@ -470,7 +535,9 @@ $("view").addEventListener("click", ev => {
     case "reset": if (confirm("모의 잔고와 내역을 모두 지울까요?")) { S = fresh(); save(); render(); toast("초기화했습니다"); } return;
   }
 });
-$("view").addEventListener("input", ev => { document.querySelectorAll("#view .err").forEach(e => e.textContent = ""); if (ev.target.id === "o-amt") calcOrder(); if (/^w-(amt|net)$/.test(ev.target.id)) calcWd(); });
+$("view").addEventListener("input", ev => { document.querySelectorAll("#view .err").forEach(e => e.textContent = ""); if (ev.target.id === "o-amt") calcOrder();
+  if (ev.target.id === "m-q") { route.q = ev.target.value; $("m-list").innerHTML = marketRows(); }
+  if (ev.target.id === "w-q" || ev.target.id === "w-f") { route.q = $("w-q").value; route.f = $("w-f").value; $("w-list").innerHTML = walletRows(); } if (/^w-(amt|net)$/.test(ev.target.id)) calcWd(); });
 
 /* ---------- 가상 시세 ---------- */
 setInterval(() => {
@@ -481,12 +548,15 @@ setInterval(() => {
     const g = chg(c.s);
     document.querySelectorAll(`[data-p="${c.s}"]`).forEach(e => { e.textContent = fp(price[c.s]); e.className = e.className.replace(/\b(up|down)\b/g, "").trim() + " " + g.cls; });
     document.querySelectorAll(`[data-c="${c.s}"]`).forEach(e => { e.textContent = g.pct.toFixed(2) + "%"; e.className = e.className.replace(/\b(up|down)\b/g, "").trim() + " " + g.cls; });
+    document.querySelectorAll(`[data-d="${c.s}"]`).forEach(e => { e.textContent = fd(g.d); });
+    document.querySelectorAll(`[data-k="${c.s}"]`).forEach(e => { e.className = "cdl " + g.cls; });
     document.querySelectorAll(`[data-v="${c.s}"]`).forEach(e => { e.textContent = won(qty(c.s) * price[c.s]) + " KRW"; });
   });
   const ev = totalEval();
-  if ($("m-ev")) { $("m-ev").textContent = won(ev); const pl = ev - totalBuy(); $("m-pl").textContent = won(pl); $("m-pl").className = pl > 0 ? "up" : pl < 0 ? "down" : ""; }
+  if ($("m-ev")) { $("m-ev").textContent = won(ev); const pl = ev - totalBuy(); $("m-pl").textContent = won(pl); const k = pl > 0 ? "up" : pl < 0 ? "down" : "", by = totalBuy();
+    $("m-pl").className = k; $("m-r").className = k; $("m-r").textContent = (by ? pl / by * 100 : 0).toFixed(2) + "%"; }
   if ($("w-tot")) $("w-tot").textContent = won(S.krw + ev);
-  if (route.page === "order") calcOrder();
+  if (route.page === "order") { calcOrder(); if ($("ob")) $("ob").innerHTML = obHtml(route.sym); }
 }, 1500);
 
 drawPin(); settle(); render();
