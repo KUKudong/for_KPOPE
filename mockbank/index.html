@@ -147,6 +147,80 @@ input{font:inherit}
 .fb{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:#d3dbd7;border-radius:18px;padding:16px 20px;margin-bottom:12px}
 .fb small{display:block;color:#555;font-size:13px}.fb b{font-size:15px}.fb .ar{margin-left:auto;font-size:18px;color:#444}
 .tabs svg{display:block;width:26px;height:26px;margin:0 auto 3px}
+.screen>*{flex-shrink:0}
+.svcg .rec1 small{position:absolute;top:18px;left:16px}.svcg .rec1 b{position:absolute;top:36px;left:16px;margin:0}
+.top.w{background:#fff}.top.g{background:#f3f6f5}
+.soft{background:#f3f6f5}
+.gear svg{width:26px;height:26px;display:block}
+.chips{display:flex;gap:8px;padding:4px 20px 8px;overflow-x:auto;flex:none;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{position:relative;flex:none;background:#edf1f5;color:#6b7480;border-radius:999px;padding:9px 14px;font-size:15px;font-weight:500;margin-top:6px}
+.chips button.on{background:var(--brand);color:#fff;font-weight:700}
+.chips.dark button.on{background:#1f2933}
+.chips .n,.nb{background:var(--red);color:#fff;font-size:9px;font-weight:800;border-radius:50%;width:15px;height:15px;display:grid;place-items:center}
+.chips .n{position:absolute;right:-2px;top:-5px}
+.nb{display:inline-grid;vertical-align:middle;margin-left:4px}
+.h3{font-size:18px;font-weight:700;padding:22px 20px 6px;margin:0}
+.prod{display:flex;justify-content:space-between;gap:12px;width:calc(100% - 40px);margin:0 20px;padding:22px 0;border-bottom:1px solid var(--line);text-align:left}
+.prod:last-child{border-bottom:0}
+.prod b{font-size:17px;letter-spacing:-.3px}
+.prod .tag{background:#e9eef3;color:#55606c;font-size:12px;border-radius:10px;padding:2px 8px;margin-left:6px;font-weight:500;vertical-align:middle}
+.prod small{display:block;color:var(--sub);font-size:14px;margin-top:8px}
+.prod .rt{text-align:right;flex:none;font-size:14px;color:#333;line-height:1.5}
+.prod .rt em{font-style:normal;font-weight:800;font-size:16px;color:var(--brand);margin-left:2px}
+.prod .rt i{display:block;font-style:normal;font-size:11px;color:#555;margin-top:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 20px 0}
+.two button{background:#fff;border-radius:14px;padding:14px 16px;text-align:left;position:relative;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.two small{display:block;font-size:12px;color:#555}
+.two b{display:block;font-size:16px;margin-top:6px}
+.two .ar,.lrow .ar,.svc2 .ar{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#777;font-size:18px}
+.eye{color:var(--brand);font-weight:700;font-size:14px;padding:44px 20px 0}
+.big{font-size:22px;font-weight:800;padding:8px 20px 0;margin:0;letter-spacing:-.5px}
+.rw{display:flex;gap:16px;overflow-x:auto;padding:46px 20px 10px;scrollbar-width:none}
+.rw::-webkit-scrollbar{display:none}
+.rwc{flex:none;width:146px;border-radius:22px;padding-top:46px;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.rwc .ic{position:absolute;left:50%;top:-30px;transform:translateX(-50%);width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:30px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.rwc .in{background:#fff;border-radius:22px;padding:22px 14px 16px;text-align:center}
+.rwc{display:flex}.rwc .in{flex:1;display:flex;flex-direction:column}.rwc span{flex:1}
+.rwc b{display:block;font-size:16px}
+.rwc span{display:block;color:#555;font-size:13px;margin:8px 0 30px}
+.rwc button{width:100%;background:var(--brand-soft);color:var(--brand);border-radius:8px;padding:8px 0;font-size:14px}
+.lcard{background:#fff;border-radius:22px;margin:22px 20px 24px;padding:6px 20px}
+.lrow{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:20px 0;border-bottom:1px solid var(--line);position:relative}
+.lrow:last-child{border-bottom:0}
+.lrow b{display:block;font-size:16px}
+.lrow small{display:block;color:var(--sub);font-size:14px;margin-top:5px}
+.lrow .ar{right:0}
+.svcg{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;padding:6px 20px 0}
+.svcg .rec1{grid-row:1/3;background:#d9efe6;border-radius:14px;padding:18px 16px;text-align:left;position:relative;min-height:150px}
+.svcg .rec1 small{color:var(--brand);font-weight:700;font-size:12px;display:block}
+.svcg .rec1 b{font-size:16px;display:block;margin-top:4px}
+.svcg .rec1 i{position:absolute;right:18px;bottom:16px;font-style:normal;font-size:38px}
+.svc2{background:#f4f6f8;border-radius:14px;padding:16px;text-align:left;position:relative}
+.svc2 small{display:block;color:#777;font-size:12px}
+.svc2 b{display:block;font-size:16px;margin-top:6px}
+.ico8{display:grid;grid-template-columns:repeat(4,1fr);row-gap:22px;padding:26px 8px 28px;text-align:center}
+.ico8 button{font-size:13px;color:#6b7480}
+.ico8 i{display:block;font-style:normal;font-size:26px;margin-bottom:8px;height:32px}
+.hist-h{padding:10px 20px 4px;font-size:23px;font-weight:800;display:flex;align-items:center;gap:8px;letter-spacing:-.5px}
+.hist-h .lg{width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-size:16px;display:grid;place-items:center}
+.hx{padding:16px 0;margin:0 20px;border-bottom:1px solid var(--line)}
+.hx .d{font-size:13px;color:#333}
+.hx .d i{font-style:normal;color:#8a94a0;border-left:1px solid #d5dbe1;margin-left:6px;padding-left:6px}
+.hx .l{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px}
+.hx .l span{font-size:16px;font-weight:500}
+.hx .l b{font-size:22px;font-weight:700;letter-spacing:-.2px}
+.hx .r{display:flex;justify-content:space-between;color:#7a8490;font-size:14px;margin-top:6px}
+.who{display:flex;align-items:center;gap:8px;padding:18px 20px 10px;flex:none}
+.who h1{font-size:24px;margin:0;letter-spacing:-.5px}
+.who .gear{margin-left:auto}
+.pin{background:#edf1f5;border-radius:999px;padding:9px 14px;font-size:14px;color:#444;margin:0 6px 8px 0}
+.pin::after{content:" 📌";font-size:11px;opacity:.5}
+.menu{display:grid;grid-template-columns:1fr 1fr;padding:6px 20px 14px}
+.menu button{text-align:left;font-size:16px;padding:15px 0;color:#333}
+.menu .dot::after{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--red);vertical-align:top;margin-left:3px}
+.hr{border-top:1px solid var(--line);margin:0 20px}
+.bot{position:absolute;right:18px;bottom:86px;width:50px;height:50px;border-radius:50%;background:#101828;font-size:24px;z-index:5;box-shadow:0 3px 10px rgba(0,0,0,.25)}
 </style>
 </head>
 <body>
@@ -250,6 +324,112 @@ input{font:inherit}
     <div class="flow" id="flowBody"></div>
   </section>
 
+  <!-- 상품 -->
+  <section class="screen white" id="s-prod">
+    <div class="top w"><h1>상품</h1></div>
+    <div class="chips" id="prodChips">
+      <button class="on" data-cat="save">예적금<span class="n">N</span></button>
+      <button data-cat="loan">대출<span class="n">N</span></button>
+      <button data-cat="card">카드</button>
+      <button data-cat="stu">학생<span class="n">N</span></button>
+      <button data-cat="minor">미성년<span class="n">N</span></button>
+      <button data-cat="inv">투자</button>
+    </div>
+    <div id="prodList"></div>
+  </section>
+
+  <!-- 혜택 -->
+  <section class="screen soft" id="s-bene">
+    <div class="top g"><h1>혜택</h1><button style="font-size:16px" data-toast="아직 받은 혜택이 없어요">받은 혜택</button></div>
+    <div class="two">
+      <button data-toast="쿠폰이 없어요"><small>🎟️ 쿠폰</small><b>0장</b><span class="ar">›</span></button>
+      <button data-act="reward"><small>🅿️ 포인트</small><b>모으기</b><span class="ar">›</span></button>
+    </div>
+    <div class="eye">매일매일 돈 되는 습관</div>
+    <h2 class="big">다양한 리워드를 만나보세요</h2>
+    <div class="rw">
+      <div class="rwc" style="background:#eec200"><div class="ic">🪙</div><div class="in"><b>버튼 누르고</b><span>최대 7원 받기</span><button data-act="reward">참여하기</button></div></div>
+      <div class="rwc" style="background:#45c98a"><div class="ic">🌱</div><div class="in"><b>새싹 키우기</b><span>매일 현금이 자라나요</span><button data-toast="새싹 키우기는 준비 중이에요">시작하기</button></div></div>
+      <div class="rwc" style="background:#8f7be8"><div class="ic">🃏</div><div class="in"><b>입출금리워드</b><span>최대 현금 받기</span><button data-toast="입출금리워드는 준비 중이에요">시작하기</button></div></div>
+    </div>
+    <div class="eye">새싹뱅크 인기혜택</div>
+    <h2 class="big">많은 사람들이 보고 있어요</h2>
+    <div class="lcard">
+      <button class="lrow" data-act="allowance"><div class="rnd">💳</div><div><b>첫 충전 연습캐시 받아보세요</b><small>누를 때마다 연습용 돈 충전</small></div><span class="ar">›</span></button>
+      <button class="lrow" data-toast="오늘의 퀴즈는 준비 중이에요"><div class="rnd">🧩</div><div><b>오늘의 금융 퀴즈 풀고</b><small>금융 상식에 도전해보세요</small></div><span class="ar">›</span></button>
+      <button class="lrow" data-toast="모의 앱에서는 카드를 발급하지 않아요"><div class="rnd">🚌</div><div><b>대중교통 1번 타고 리워드 받기</b><small>연습 체크카드 교통 혜택</small></div><span class="ar">›</span></button>
+    </div>
+  </section>
+
+  <!-- 서비스 -->
+  <section class="screen white" id="s-svc">
+    <div class="top w"><h1>서비스</h1></div>
+    <div class="svcg">
+      <button class="rec1" data-act="reward"><small>추천</small><b>매일걷고 포인트받기</b><i>👟</i></button>
+      <button class="svc2" data-sendto="exch"><small>주간 투자 연습</small><b>모의 코인거래소</b><span class="ar">›</span></button>
+      <button class="svc2" data-toast="오늘의 금융소식은 수업 시간에 알려 드려요"><small>오늘의 경제</small><b>금융소식 읽기</b><span class="ar">›</span></button>
+    </div>
+    <div class="ico8">
+      <button data-toast="AI퀴즈는 준비 중이에요"><i>🏆</i>AI퀴즈</button>
+      <button data-toast="게임라운지는 준비 중이에요"><i>🕹️</i>게임라운지</button>
+      <button data-toast="쿠폰북은 준비 중이에요"><i>🎫</i>브랜드쿠폰북</button>
+      <button data-toast="내신용관리는 준비 중이에요"><i>✅</i>내신용관리</button>
+      <button data-toast="모의 앱에서는 해외송금이 없어요"><i>🌏</i>해외송금</button>
+      <button data-sendto="exch"><i>📈</i>투자스터디</button>
+      <button data-go="acct"><i>🧾</i>용돈리포트</button>
+      <button data-toast="더 많은 서비스는 준비 중이에요"><i>⌄</i>더보기</button>
+    </div>
+    <div class="gap"></div>
+    <div class="chips dark" id="svcChips" style="padding-top:10px">
+      <button class="on" data-svc="app">앱테크<span class="n">N</span></button>
+      <button data-svc="inv">투자</button>
+      <button data-svc="life">금융생활<span class="n">N</span></button>
+      <button data-svc="stu">학생</button>
+      <button data-svc="minor">미성년</button>
+    </div>
+    <div id="svcList" style="padding:0 20px 20px"></div>
+  </section>
+
+  <!-- 이체내역 -->
+  <section class="screen white" id="s-hist">
+    <div class="nav"><button class="back" data-go="all"><svg viewBox="0 0 24 24" fill="none" stroke="#16191d" stroke-width="2"><path d="M15 4 7 12l8 8"/></svg></button><button data-toast="최근 3개월 동안 보낸 내역이에요">안내</button></div>
+    <div class="hist-h"><span class="lg">🌱</span>MY 입출금통장(<span id="last4"></span>) <span style="font-size:13px">▼</span></div>
+    <div class="chips dark" style="padding-top:8px">
+      <button class="on">일반이체</button>
+      <button data-toast="예약이체 내역이 없어요">예약이체</button>
+      <button data-toast="잠시 후 이체 내역이 없어요">잠시 후 이체</button>
+    </div>
+    <div class="filter" style="justify-content:flex-end">3개월 · 전체 ⌄</div>
+    <div id="histList"></div>
+  </section>
+
+  <!-- 전체 -->
+  <section class="screen white" id="s-all">
+    <div class="who"><button data-go="set" style="display:flex;align-items:center;gap:8px"><h1 class="uname"></h1><span style="color:#777;font-size:20px">›</span></button><button class="gear" data-go="set"><svg viewBox="0 0 24 24" fill="none" stroke="#16191d" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M12 2.800l1.700 2.300 2.800-.500 1 2.700 2.700 1-.500 2.800 2.300 1.700-2.300 1.700.500 2.800-2.700 1-1 2.700-2.800-.500-1.700 2.300-1.700-2.300-2.800.500-1-2.700-2.700-1 .500-2.800L2 12.800l2.300-1.700-.500-2.800 2.700-1 1-2.700 2.800.500Z"/></svg></button></div>
+    <h3 class="h3" style="padding-top:14px">최근 이용</h3>
+    <div style="padding:8px 20px 14px">
+      <button class="pin" data-go="hist">이체내역</button><button class="pin" data-act="pull">가져오기</button><button class="pin" data-act="allowance">연습용 돈 받기</button><button class="pin" data-go="acct">거래내역 조회</button>
+    </div>
+    <div class="hr"></div>
+    <button class="lrow" style="margin:0 20px;width:calc(100% - 40px);border:0" data-toast="새 공지사항이 없어요"><span style="font-size:20px">📢</span><b>공지사항 보러가기</b><span class="ar">›</span></button>
+    <div class="hr"></div>
+    <h3 class="h3">이체/출금</h3>
+    <div class="menu">
+      <button data-act="send">이체하기</button><button data-go="hist">이체내역</button>
+      <button data-toast="AI 이체는 준비 중이에요"><span class="dot">AI 이체</span></button><button data-toast="모의 앱에서는 한도가 없어요">이체한도 변경</button>
+      <button data-toast="자동이체는 다음 수업에서 배워요">자동이체/자동납부</button><button data-toast="모의 앱에서는 세금을 내지 않아요">세금/공과금 내기</button>
+      <button data-toast="준비 중이에요"><span class="dot">타행 자동이체 가져오기</span></button><button data-toast="모의 앱에서는 현금을 찾을 수 없어요">카드 없이 현금찾기</button>
+      <button data-toast="모의 앱에서는 결제 기능이 없어요">새싹페이</button>
+    </div>
+    <div class="hr"></div>
+    <h3 class="h3">계좌</h3>
+    <div class="menu">
+      <button data-act="pull">잠자는 잔고 모으기</button><button data-go="acct">계좌통합조회</button>
+      <button data-toast="모의 앱에서는 계좌를 더 만들 수 없어요">계좌 만들기</button><button data-toast="준비 중이에요">계좌 숨기기</button>
+      <button data-toast="준비 중이에요">휴대폰 계좌번호</button>
+    </div>
+  </section>
+
   <!-- 설정 -->
   <section class="screen white" id="s-set">
     <div class="nav"><button class="back" data-go="home"><svg viewBox="0 0 24 24" fill="none" stroke="#16191d" stroke-width="2"><path d="M15 4 7 12l8 8"/></svg></button><span></span></div>
@@ -266,18 +446,19 @@ input{font:inherit}
 
   <nav class="tabs" id="tabs">
     <button class="on" data-go="home"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 11.5 12 4l8 7.5V20a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1Z"/></svg>홈</button>
-    <button data-toast="상품 탭은 준비 중이에요"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 8h14l1 12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm4 0V6a3 3 0 0 1 6 0v2" fill-rule="evenodd"/></svg>상품</button>
-    <button data-toast="혜택 탭은 준비 중이에요"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9h8v4H3Zm10 0h8v4h-8ZM4.5 14.5H11V21H5.5a1 1 0 0 1-1-1Zm8.5 0h6.500V20a1 1 0 0 1-1 1H13ZM12 8S9 3 7 5s5 3 5 3 3-5 5-3-5 3-5 3Z"/></svg>혜택</button>
-    <button data-toast="서비스 탭은 준비 중이에요"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Zm6 4.500-1.400 2.900-3.100.400 2.300 2.200-.600 3.100 2.800-1.500 2.800 1.500-.600-3.100 2.300-2.200-3.100-.400Z" fill-rule="evenodd"/></svg>서비스</button>
-    <button data-go="set"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5.500h16v2.500H4Zm0 5.250h16v2.500H4Zm0 5.250h16v2.500H4Z"/></svg>전체</button>
+    <button data-go="prod"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 8h14l1 12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm4 0V6a3 3 0 0 1 6 0v2" fill-rule="evenodd"/></svg>상품</button>
+    <button data-go="bene"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9h8v4H3Zm10 0h8v4h-8ZM4.5 14.5H11V21H5.5a1 1 0 0 1-1-1Zm8.5 0h6.500V20a1 1 0 0 1-1 1H13ZM12 8S9 3 7 5s5 3 5 3 3-5 5-3-5 3-5 3Z"/></svg>혜택</button>
+    <button data-go="svc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Zm6 4.500-1.400 2.900-3.100.400 2.300 2.200-.600 3.100 2.800-1.500 2.800 1.500-.600-3.100 2.300-2.200-3.100-.400Z" fill-rule="evenodd"/></svg>서비스</button>
+    <button data-go="all"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5.500h16v2.500H4Zm0 5.250h16v2.500H4Zm0 5.250h16v2.500H4Z"/></svg>전체</button>
   </nav>
+  <button class="bot" id="bot" data-toast="안녕하세요! 저는 연습용 챗봇이에요">🤖</button>
   <div class="toast" id="toast"></div>
 </div>
 
 <script>
 (function(){
 'use strict';
-var KEY='saessak-mockbank-v2';
+var KEY='saessak-mockbank-v3';
 var ACC={
   main:{name:'MY 입출금통장',icon:'🌱'},
   piggy:{name:'연습 저금통',icon:'👛'},
@@ -287,27 +468,28 @@ function rnd(n){var s='';for(var i=0;i<n;i++)s+=Math.floor(Math.random()*10);ret
 function fresh(){
   var now=Date.now(),H=3600000,D=24*H;
   /* 더미 입출금 내역: [며칠 전, 시, 분, 이름, 금액] (오래된 것부터) */
+  var nos={piggy:'777-'+rnd(3)+'-'+rnd(6),exch:'777-'+rnd(3)+'-'+rnd(6)};
   var seed=[
     [24,9,12,'엄마 용돈',50000],[23,16,40,'행복편의점',-2800],[22,12,35,'맛나분식',-5500],
-    [21,3,19,'이자',14],[20,18,5,'김하늘',-10000],[18,15,22,'별빛문구',-4200],
-    [17,10,3,'할머니',100000],[17,10,30,'연습 저금통',-50000],[15,13,48,'새싹서점',-13500],
+    [21,3,19,'이자',14],[20,18,5,'김하늘',-10000,'3333'+rnd(9)],[18,15,22,'별빛문구',-4200],
+    [17,10,3,'할머니',100000],[17,10,30,'연습 저금통',-50000,nos.piggy],[15,13,48,'새싹서점',-13500],
     [13,17,26,'이도윤',8000],[12,8,15,'교통카드 충전',-10000],[10,19,2,'달콤베이커리',-3900],
-    [8,9,0,'엄마 용돈',50000],[7,16,11,'행복편의점',-1700],[6,14,8,'박서연',-15000],
-    [4,12,44,'맛나분식',-6000],[3,20,31,'아빠',30000],[2,11,51,'모의 코인거래소 연결계좌',-50000],
+    [8,9,0,'엄마 용돈',50000],[7,16,11,'행복편의점',-1700],[6,14,8,'박서연',-15000,'100-'+rnd(3)+'-'+rnd(6)],
+    [4,12,44,'맛나분식',-6000],[3,20,31,'아빠',30000],[2,11,51,'모의 코인거래소 연결계좌',-50000,nos.exch],
     [0,0,0,'선생님(연습용 용돈)',1000000]
   ];
   var bal=0,tx=[],day=new Date(now);day.setHours(0,0,0,0);
   seed.forEach(function(r){
     bal+=r[4];
     var t=r[0]?day.getTime()-r[0]*D+r[1]*H+r[2]*60000:now;
-    tx.unshift({t:t,who:r[3],amt:r[4],bal:bal});
+    tx.unshift({t:t,who:r[3],amt:r[4],bal:bal,no:r[5]});
   });
   return {name:'학생',notice:true,no:'777-'+rnd(3)+'-'+rnd(6),
-    bal:{main:bal,piggy:350000,exch:50000},tx:tx};
+    nos:nos,bal:{main:bal,piggy:350000,exch:50000},tx:tx};
 }
 var S;
 try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
-if(!S||!S.bal)S=fresh();
+if(!S||!S.bal||!S.nos)S=fresh();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function won(n){return n.toLocaleString('ko-KR')+'원'}
 function $(id){return document.getElementById(id)}
@@ -318,18 +500,79 @@ var toastT;
 function toast(m){var t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},1800)}
 
 function go(name){
-  ['home','acct','flow','set'].forEach(function(s){$('s-'+s).classList.toggle('on',s===name)});
-  $('tabs').style.display=(name==='home')?'flex':'none';
+  ['home','acct','flow','set','prod','bene','svc','hist','all'].forEach(function(s){$('s-'+s).classList.toggle('on',s===name)});
+  var tab=['home','prod','bene','svc','all'].indexOf(name)>=0;
+  $('tabs').style.display=tab?'flex':'none';
+  $('bot').style.display=name==='all'?'block':'none';
+  if(tab)document.querySelectorAll('#tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.go===name)});
   $('s-'+name).scrollTop=0;
   render();
 }
 
-function addTx(who,amt){
+function addTx(who,amt,no){
   S.bal.main+=amt;
-  S.tx.unshift({t:Date.now(),who:who,amt:amt,bal:S.bal.main});
+  S.tx.unshift({t:Date.now(),who:who,amt:amt,bal:S.bal.main,no:no});
 }
 
+/* 상품·서비스 목록 (모의 상품: 금리는 수업용 예시) */
+var cat='save',svc='app';
+var PROD={
+  save:['저축',[
+    ['이자 먼저 받는 정기예금','N','원할 때 이자를 받고 더 넣을 수도 있는 예금',[['연','3.90%']],'(12개월, 세전)'],
+    ['새싹 텃밭 적금','','매달 이자가 조금씩 자라는 적금',[['연','3.00%']],'(12개월, 세전)'],
+    ['새싹 정기예금','금리보장','조건 없이 맡겨 두는 간단한 예금',[['연','3.60%']],'(12개월, 세전)'],
+    ['두근두근 적금','N','매일 하나씩 열어보는 한 달 적금',[['최고 연','6.70%'],['기본 연','0.70%']],'(31일, 세전)'],
+    ['단골우대 자유적금','','자주 쓸수록 금리가 올라가는 적금',[['최고 연','4.30%'],['기본 연','3.70%']],'(12개월, 세전)'],
+    ['도전 저금통','','30일만 모아도 이자가 붙는 저금통',[['최고 연','3.90%'],['기본 연','1.50%']],'(세전)'],
+    ['새싹 자유적금','','넣고 싶을 때 넣는 자유적금',[['연','3.80%']],'(12개월, 세전)']]],
+  loan:['대출',[
+    ['모의 연습대출','N','빌린 돈과 이자를 연습으로 배워요',[['연','5.00%']],'(12개월)'],
+    ['비상금 연습대출','','소액을 빌리고 갚는 연습',[['연','6.50%']],'(1개월)']]],
+  card:['카드',[
+    ['연습 체크카드','','통장 잔액만큼만 쓰는 카드',[['캐시백','0.5%']],'(연습용)'],
+    ['교통 체크카드','','버스·지하철 요금 연습',[['할인','10%']],'(연습용)']]],
+  stu:['학생',[
+    ['용돈 통장','N','용돈을 받고 관리하는 통장',[['연','2.00%']],'(세전)'],
+    ['목표 저금통','','사고 싶은 것을 위해 모으기',[['연','3.00%']],'(세전)']]],
+  minor:['미성년',[
+    ['첫 통장 만들기','N','부모님과 함께 만드는 첫 통장',[['연','2.00%']],'(세전)']]],
+  inv:['투자',[
+    ['모의 코인거래소','','연습용 돈으로 가상자산 체험',[['수수료','0원']],'(연습용)'],
+    ['모의 주식 체험','','한 주부터 사 보는 주식 연습',[['수수료','0원']],'(연습용)']]]
+};
+var SVC={
+  app:['미션',[['🌱','새싹 키우기','매일 돈 버는 게임'],['🪙','클릭하고 용돈받기','매일 받을 수 있는 용돈받기','reward'],['🃏','입출금리워드','매일매일 카드 열고 리워드 받기'],['🤖','AI 퀴즈 챌린지','퀴즈 풀고 리워드 받기']]],
+  inv:['투자',[['📈','모의 코인거래소','연습용 돈으로 가상자산 체험','exch'],['📰','오늘의 금융소식','매일 읽는 경제 이야기']]],
+  life:['금융생활',[['🧾','용돈리포트','한 달 소비 돌아보기'],['✅','내신용관리','신용점수가 무엇인지 배우기']]],
+  stu:['학생',[['🎒','용돈 통장','용돈을 받고 관리하기'],['🎯','목표 저금통','사고 싶은 것을 위해 모으기']]],
+  minor:['미성년',[['👨‍👩‍👧','첫 통장 만들기','부모님과 함께 만드는 첫 통장']]]
+};
+function renderTabs(){
+  document.querySelectorAll('#prodChips button').forEach(function(b){b.classList.toggle('on',b.dataset.cat===cat)});
+  document.querySelectorAll('#svcChips button').forEach(function(b){b.classList.toggle('on',b.dataset.svc===svc)});
+  var P=PROD[cat];
+  $('prodList').innerHTML='<h3 class="h3">'+P[0]+'</h3>'+P[1].map(function(x){
+    var tag=x[1]==='N'?'<span class="nb">N</span>':(x[1]?'<span class="tag">'+x[1]+'</span>':'');
+    var act=x[0]==='모의 코인거래소'?'data-sendto="exch"':'data-toast="모의 상품이라 실제 가입은 되지 않아요"';
+    return '<button class="prod" '+act+'><div><b>'+x[0]+'</b>'+tag+'<small>'+x[2]+'</small></div><div class="rt">'+
+      x[3].map(function(r){return '<div>'+r[0]+'<em>'+r[1]+'</em></div>'}).join('')+'<i>'+x[4]+'</i></div></button>';
+  }).join('');
+  var V=SVC[svc];
+  $('svcList').innerHTML='<h3 class="h3" style="padding-left:0">'+V[0]+'</h3>'+V[1].map(function(x){
+    var act=x[3]==='reward'?'data-act="reward"':x[3]==='exch'?'data-sendto="exch"':'data-toast="'+x[1]+'은(는) 준비 중이에요"';
+    return '<button class="lrow" '+act+'><div class="rnd">'+x[0]+'</div><div><b>'+x[1]+'</b><small>'+x[2]+'</small></div></button>';
+  }).join('');
+  $('last4').textContent=S.no.slice(-4);
+  var hs=S.tx.filter(function(x){return x.no&&x.amt<0});
+  $('histList').innerHTML=hs.length?hs.map(function(x){
+    var d=new Date(x.t);
+    return '<div class="hx"><div class="d">'+p2(d.getMonth()+1)+'.'+p2(d.getDate())+'<i>'+p2(d.getHours())+':'+p2(d.getMinutes())+'</i></div>'+
+      '<div class="l"><span>'+esc(x.who)+'</span><b>'+won(-x.amt)+'</b></div>'+
+      '<div class="r"><span>'+esc(x.no)+'</span><span>성공</span></div></div>';
+  }).join(''):'<div class="empty">이체 내역이 없어요</div>';
+}
 function render(){
+  renderTabs();
   document.querySelectorAll('.uname').forEach(function(e){e.textContent=S.name});
   document.querySelectorAll('.mainNo').forEach(function(e){e.textContent=S.no});
   $('homeBal').textContent=won(S.bal.main);
@@ -400,7 +643,7 @@ function execFlow(){
   var a=Number(F.amt);
   if(!(a>0)||a>srcBal())return toast('잔액을 확인해 주세요');
   if(F.mode==='pull'){S.bal.piggy-=a;addTx(F.to.label,a)}
-  else{if(F.to.key)S.bal[F.to.key]+=a;addTx(F.to.label,-a)}
+  else{if(F.to.key)S.bal[F.to.key]+=a;addTx(F.to.label,-a,F.to.no||S.nos[F.to.key])}
   save();F.step='done';drawFlow();
 }
 
@@ -413,6 +656,13 @@ document.addEventListener('click',function(e){
   if(d.sendto){startFlow('send',d.sendto);F.fixed=true;return}
   if(d.act==='send')return startFlow('send');
   if(d.act==='pull')return startFlow('pull');
+  if(d.act==='reward'){
+    var day=new Date().toDateString();
+    if(S.rewardDay===day)return toast('오늘은 이미 받았어요. 내일 다시 눌러 보세요');
+    var n=1+Math.floor(Math.random()*7);S.rewardDay=day;addTx('버튼 누르기 리워드',n);save();render();return toast(n+'원을 받았어요');
+  }
+  if(d.cat){cat=d.cat;return render()}
+  if(d.svc){svc=d.svc;return render()}
   if(d.act==='allowance'){addTx('선생님(연습용 용돈)',1000000);save();render();return toast('연습용 돈 100만원이 충전됐어요')}
   if(d.pick){F.to={key:d.pick,label:ACC[d.pick].name};F.step='amt';return drawFlow()}
   if(d.k){

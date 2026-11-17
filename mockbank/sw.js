@@ -1,5 +1,5 @@
 /* 새싹뱅크 모의 앱: 오프라인에서도 열리도록 화면 파일과 글꼴을 저장한다 */
-var CACHE = 'saessak-mockbank-cache-v1';
+var CACHE = 'saessak-mockbank-cache-v2';
 var SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(SHELL); }).then(function () { return self.skipWaiting(); }));
