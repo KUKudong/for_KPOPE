@@ -728,10 +728,83 @@ function drawCert(){
         return '<tr><td>'+p2(d.getMonth()+1)+'.'+p2(d.getDate())+' '+p2(d.getHours())+':'+p2(d.getMinutes())+'</td><td>'+esc(x.who)+'</td><td>'+n(x.amt<0?-x.amt:0)+'</td><td>'+n(x.amt>0?x.amt:0)+'</td><td>'+x.bal.toLocaleString('ko-KR')+'</td></tr>'}).join(''):'<tr><td colspan="5" style="text-align:center">거래 내역이 없습니다</td></tr>')+
       '</tbody><tfoot><tr><td colspan="2">합계</td><td>'+(n(tout)||'0')+'</td><td>'+(n(tin)||'0')+'</td><td></td></tr></tfoot></table>'+
       '<div class="sign">위 내역은 수업용 모의 앱의 가상 거래임을 확인합니다.<br>'+ymd(now)+'<br><b>새싹뱅크 (모의 은행)</b><span class="seal">모의</span></div></div>'+
-      '<div class="hint" style="margin-top:12px">'+(CT.method==='PDF'?'모의 앱에서는 PDF 파일을 만들지 않고 화면으로 보여 줘요.':'')+'</div>'+
-      '<button class="cta" data-go="mng">확인</button>';
+      (CT.method==='PDF'?'<button class="cta" id="certPdf" style="margin-top:16px">PDF 파일 저장</button><button class="cta ghost" data-go="mng">확인</button>':'<button class="cta" data-go="mng" style="margin-top:16px">확인</button>');
   }
   b.innerHTML=h;$('s-cert').scrollTop=0;
+}
+/* 거래내역증명서 PDF 만들기: 캔버스에 그린 쪽을 JPEG로 담아 PDF 파일을 직접 조립한다 */
+function certPages(){
+  var now=new Date(),from=new Date();from.setMonth(from.getMonth()-CT.per);
+  var list=S.tx.filter(function(x){return x.t>=from.getTime()}).slice().reverse();
+  var tin=0,tout=0;list.forEach(function(x){if(x.amt>0)tin+=x.amt;else tout-=x.amt});
+  var FONT='"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif';
+  var W=595,H=842,M=40,RH=20,pages=[],c,g,y;
+  var n=function(v){return v?v.toLocaleString('ko-KR'):''};
+  function txt(t,x,yy,o){o=o||{};g.font=(o.b?'700 ':'400 ')+(o.s||9.5)+'px '+FONT;g.fillStyle=o.c||'#16191d';g.textAlign=o.a||'left';g.fillText(t,x,yy)}
+  function line(yy,col){g.strokeStyle=col||'#e3e8ee';g.lineWidth=col?1:.6;g.beginPath();g.moveTo(M,yy);g.lineTo(W-M,yy);g.stroke()}
+  function newPage(){
+    c=document.createElement('canvas');c.width=W*2;c.height=H*2;g=c.getContext('2d');g.scale(2,2);
+    g.fillStyle='#fff';g.fillRect(0,0,W,H);
+    g.save();g.translate(W/2,H/2);g.rotate(-0.42);txt('모의 · 수업용',0,0,{b:1,s:76,a:'center',c:'rgba(11,107,74,.08)'});g.restore();
+    pages.push(c);y=56;
+  }
+  function head(){
+    g.fillStyle='#f4f6f9';g.fillRect(M,y,W-2*M,RH);line(y,'#333');line(y+RH,'#999');
+    txt('거래일시',M+6,y+14,{b:1});txt('내용',150,y+14,{b:1});txt('출금',385,y+14,{b:1,a:'right'});txt('입금',470,y+14,{b:1,a:'right'});txt('잔액',W-M-6,y+14,{b:1,a:'right'});y+=RH;
+  }
+  newPage();
+  txt('거 래 내 역 증 명 서',W/2,y+18,{b:1,s:21,a:'center'});
+  txt('발급번호 모의-'+now.getFullYear()+p2(now.getMonth()+1)+p2(now.getDate())+'-'+S.no.slice(-4),W/2,y+36,{s:9,a:'center',c:'#6b7480'});y+=58;
+  line(y,'#333');
+  [['성명',S.name],['계좌번호',S.no],['상품명','MY 입출금통장'],['조회기간',ymd(from)+' ~ '+ymd(now)],['거래건수',list.length+'건']].forEach(function(r){
+    g.fillStyle='#f4f6f9';g.fillRect(M,y,90,22);txt(r[0],M+8,y+15,{c:'#555',s:10});txt(r[1],M+100,y+15,{s:10});y+=22;line(y);
+  });
+  y+=16;head();
+  list.forEach(function(x){
+    if(y+RH>H-60){newPage();head()}
+    var d=new Date(x.t);
+    txt(p2(d.getMonth()+1)+'.'+p2(d.getDate())+' '+p2(d.getHours())+':'+p2(d.getMinutes()),M+6,y+14,{c:'#555'});
+    txt(x.who,150,y+14);txt(n(x.amt<0?-x.amt:0),385,y+14,{a:'right'});txt(n(x.amt>0?x.amt:0),470,y+14,{a:'right'});txt(x.bal.toLocaleString('ko-KR'),W-M-6,y+14,{a:'right'});
+    y+=RH;line(y);
+  });
+  if(y+125>H-40){newPage()}
+  line(y,'#999');txt('합계',M+6,y+15,{b:1});txt(n(tout)||'0',385,y+15,{b:1,a:'right'});txt(n(tin)||'0',470,y+15,{b:1,a:'right'});y+=56;
+  txt('위 내역은 수업용 모의 앱의 가상 거래임을 확인합니다.',W/2,y,{s:11,a:'center'});
+  txt(ymd(now),W/2,y+22,{s:11,a:'center'});
+  txt('새싹뱅크 (모의 은행)',W/2-14,y+46,{b:1,s:13,a:'center'});
+  g.save();g.translate(W/2+78,y+41);g.rotate(-0.14);g.strokeStyle='#f04452';g.lineWidth=2;g.beginPath();g.arc(0,0,20,0,Math.PI*2);g.stroke();txt('모의',0,4.500,{b:1,s:12,a:'center',c:'#f04452'});g.restore();
+  pages.forEach(function(pc,i){var q=pc.getContext('2d');q.font='400 8px '+FONT;q.fillStyle='#8a94a0';q.textAlign='center';q.fillText((i+1)+' / '+pages.length,W/2,H-28)});
+  return pages;
+}
+function makePdf(pages){
+  var parts=[],len=0,offs=[],i;
+  function push(x){if(typeof x==='string'){var u=new Uint8Array(x.length);for(var k=0;k<x.length;k++)u[k]=x.charCodeAt(k)&255;x=u}parts.push(x);len+=x.length}
+  function obj(k,body){offs[k]=len;push(k+' 0 obj\n');body();push('\nendobj\n')}
+  var jp=pages.map(function(c){var b=atob(c.toDataURL('image/jpeg',.92).split(',')[1]),u=new Uint8Array(b.length);for(var k=0;k<b.length;k++)u[k]=b.charCodeAt(k);return u});
+  push('%PDF-1.4\n%\xe2\xe3\xcf\xd3\n');
+  obj(1,function(){push('<< /Type /Catalog /Pages 2 0 R >>')});
+  obj(2,function(){push('<< /Type /Pages /Kids ['+jp.map(function(_,k){return (3+k*3)+' 0 R'}).join(' ')+'] /Count '+jp.length+' >>')});
+  jp.forEach(function(j,k){
+    var a=3+k*3,cs='q 595 0 0 842 0 0 cm /Im0 Do Q';
+    obj(a,function(){push('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /XObject << /Im0 '+(a+2)+' 0 R >> >> /Contents '+(a+1)+' 0 R >>')});
+    obj(a+1,function(){push('<< /Length '+cs.length+' >>\nstream\n'+cs+'\nendstream')});
+    obj(a+2,function(){push('<< /Type /XObject /Subtype /Image /Width '+pages[k].width+' /Height '+pages[k].height+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+j.length+' >>\nstream\n');push(j);push('\nendstream')});
+  });
+  var total=2+jp.length*3,xref=len;
+  push('xref\n0 '+(total+1)+'\n0000000000 65535 f \n');
+  for(i=1;i<=total;i++)push(('0000000000'+offs[i]).slice(-10)+' 00000 n \n');
+  push('trailer\n<< /Size '+(total+1)+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF');
+  return new Blob(parts,{type:'application/pdf'});
+}
+function certSave(){
+  try{
+    var d=new Date(),a=document.createElement('a');
+    a.href=URL.createObjectURL(makePdf(certPages()));
+    a.download='거래내역증명서_'+d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate())+'.pdf';
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(function(){URL.revokeObjectURL(a.href)},60000);
+    toast('PDF 파일을 저장했어요');
+  }catch(e){toast('PDF 파일을 만들지 못했어요')}
 }
 function render(){
   renderTabs();
@@ -829,6 +902,7 @@ document.addEventListener('click',function(e){
     if(d.per)EX.per=Number(d.per);else EX.typ=d.typ;
     t.parentNode.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b===t)});return;
   }
+  if(t.id==='certPdf')return certSave();
   if(t.id==='certNext'){CT.step++;return drawCert()}
   if(t.id==='certBack'){if(CT.step===1||CT.step===4)return go('mng');CT.step--;return drawCert()}
   if(d.cper){CT.per=Number(d.cper);return drawCert()}
