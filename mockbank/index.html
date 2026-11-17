@@ -238,6 +238,27 @@ input{font:inherit}
 .notes b{font-size:17px}
 .notes p{margin:8px 0 0;font-size:14px;color:#555;line-height:1.5;padding-left:12px;text-indent:-12px}
 #expRes .tx{margin:0}
+.guide b{display:block;font-size:17px;margin:22px 0 6px}
+.guide p{margin:12px 0 0;font-size:15px;color:#333;line-height:1.65;padding-left:12px;text-indent:-12px}
+.selbox{display:block;border:1px solid var(--line);border-radius:14px;padding:12px 16px;position:relative}
+.selbox small{display:block;color:var(--sub);font-size:12px}
+.selbox select{appearance:none;-webkit-appearance:none;border:0;outline:0;background:none;width:100%;font:inherit;font-size:17px;padding:6px 0 2px;color:var(--ink)}
+.selbox::after{content:"▼";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:11px;pointer-events:none}
+.doc{border:1px solid #c9d1d9;border-radius:6px;padding:18px 12px 20px;position:relative;overflow:hidden;background:#fff}
+.doc::before{content:"모의 · 수업용";position:absolute;left:50%;top:45%;transform:translate(-50%,-50%) rotate(-24deg);font-size:44px;font-weight:800;color:rgba(11,107,74,.09);white-space:nowrap;pointer-events:none}
+.doc h3{text-align:center;font-size:19px;margin:4px 0 2px;letter-spacing:4px}
+.doc .sub{text-align:center;font-size:11px;color:var(--sub);margin-bottom:14px}
+.doc dl{display:grid;grid-template-columns:76px 1fr;margin:0 0 12px;font-size:12.5px;border-top:1px solid #333}
+.doc dt,.doc dd{margin:0;padding:6px 6px;border-bottom:1px solid var(--line)}
+.doc dt{background:#f4f6f9;color:#555}
+.doc table{width:100%;border-collapse:collapse;font-size:10.5px;font-variant-numeric:tabular-nums}
+.doc th{background:#f4f6f9;border-top:1px solid #333;border-bottom:1px solid #999;padding:6px 3px;font-weight:600}
+.doc td{border-bottom:1px solid var(--line);padding:6px 3px;text-align:right;white-space:nowrap}
+.doc td:nth-child(1){text-align:left;color:#555}
+.doc td:nth-child(2){text-align:left;white-space:normal;word-break:keep-all}
+.doc tfoot td{font-weight:700;border-top:1px solid #999}
+.doc .sign{text-align:center;font-size:12.5px;line-height:1.7;margin-top:18px}
+.doc .seal{display:inline-grid;place-items:center;width:46px;height:46px;border:2px solid var(--red);color:var(--red);border-radius:50%;font-size:12px;font-weight:800;margin-left:8px;vertical-align:middle;transform:rotate(-8deg)}
 </style>
 </head>
 <body>
@@ -467,7 +488,7 @@ input{font:inherit}
     <button class="mrow" data-toast="모의 앱에는 비밀번호가 없어요">계좌비밀번호 변경<span>›</span></button>
     <button class="mrow" data-toast="모의 앱에서는 알림을 보내지 않아요">입출금통지<span>›</span></button>
     <button class="mrow" data-go="exp">입출금내역 내보내기<span>›</span></button>
-    <button class="mrow" data-toast="모의 앱에서는 증명서를 발급하지 않아요">거래내역증명서 발급<span>›</span></button>
+    <button class="mrow" data-go="cert">거래내역증명서 발급<span>›</span></button>
     <button class="mrow" data-go="set">계좌해지<span>›</span></button>
   </section>
 
@@ -494,6 +515,12 @@ input{font:inherit}
       <div style="margin-top:auto;padding-top:24px"><button class="cta" id="expDo">내보내기</button></div>
     </div>
     <div class="flow" id="expRes" style="display:none"></div>
+  </section>
+
+  <!-- 거래내역증명서 발급 -->
+  <section class="screen white" id="s-cert">
+    <div class="nav"><button class="back" id="certBack"><svg viewBox="0 0 24 24" fill="none" stroke="#16191d" stroke-width="2"><path d="M15 4 7 12l8 8"/></svg></button><button id="certCancel" data-go="mng">취소</button></div>
+    <div class="flow" id="certBody"></div>
   </section>
 
   <!-- 설정 -->
@@ -566,13 +593,14 @@ var toastT;
 function toast(m){var t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},1800)}
 
 function go(name){
-  ['home','acct','flow','set','prod','bene','svc','hist','all','mng','exp'].forEach(function(s){$('s-'+s).classList.toggle('on',s===name)});
+  ['home','acct','flow','set','prod','bene','svc','hist','all','mng','exp','cert'].forEach(function(s){$('s-'+s).classList.toggle('on',s===name)});
   var tab=['home','prod','bene','svc','all'].indexOf(name)>=0;
   $('tabs').style.display=tab?'flex':'none';
   $('bot').style.display=name==='all'?'block':'none';
   if(tab)document.querySelectorAll('#tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.go===name)});
   $('s-'+name).scrollTop=0;
   if(name==='exp')expShow(false);
+  if(name==='cert'){CT={step:1,method:'',per:1};drawCert()}
   render();
 }
 
@@ -659,6 +687,50 @@ function expRun(){
       '<div class="r">잔액 '+won(x.bal)+'</div></div>'}).join(''):'<div class="empty">해당하는 내역이 없어요</div>')+
     '<button class="cta ghost" data-go="acct" style="margin-top:20px">확인</button>';
   expShow(true);
+}
+/* 거래내역증명서 발급 */
+var CT={step:1,method:'',per:1};
+function ymd(d){return d.getFullYear()+'.'+p2(d.getMonth()+1)+'.'+p2(d.getDate())}
+function drawCert(){
+  var b=$('certBody'),h='';
+  $('certCancel').style.visibility=CT.step===1?'hidden':'visible';
+  if(CT.step===1){
+    h='<h2>발급 전 확인해주세요</h2><div class="guide"><b>안내</b>'+
+      '<p>· 지금 쓰고 있는 통장의 입출금 내역을 기간별로 조회해서 발급할 수 있어요.</p>'+
+      '<p>· 모의 앱에서는 최근 6개월까지의 내역을 한 번에 발급할 수 있어요.</p>'+
+      '<p>· 이 증명서는 수업용 모의 문서라서 실제 증명 용도로는 쓸 수 없어요.</p>'+
+      '<p>· 거래내역증명서는 발급한 뒤에 내용을 고칠 수 없어요.</p>'+
+      '<b>발급 수수료</b><p>· 무료</p></div>'+
+      '<div style="margin-top:auto;padding-top:24px"><button class="cta" id="certNext">거래내역증명서 발급</button></div>';
+  }else if(CT.step===2){
+    h='<h2>발급방법을 확인해주세요</h2>'+
+      '<label class="selbox"><small>발급방법</small><select id="certMethod">'+
+      '<option value=""'+(CT.method?'':' selected')+' disabled>선택해 주세요</option>'+
+      ['PDF','화면으로 보기'].map(function(m){return '<option'+(CT.method===m?' selected':'')+'>'+m+'</option>'}).join('')+
+      '</select></label>'+
+      '<div style="margin-top:auto;padding-top:24px"><button class="cta" id="certNext"'+(CT.method?'':' disabled')+'>다음</button></div>';
+  }else if(CT.step===3){
+    h='<h2>조회기간을 선택해주세요</h2><div class="flabel" style="margin-top:0">조회기간</div>'+
+      '<div class="seg" style="grid-template-columns:repeat(3,1fr)">'+[1,3,6].map(function(m){return '<button data-cper="'+m+'"'+(CT.per===m?' class="on"':'')+'>'+m+'개월</button>'}).join('')+'</div>'+
+      '<div class="sum" style="margin-top:22px"><div><span>계좌</span><b>MY 입출금통장</b></div><div><span>발급방법</span><b>'+CT.method+'</b></div><div><span>수수료</span><b>무료</b></div></div>'+
+      '<div style="margin-top:auto;padding-top:24px"><button class="cta" id="certNext">발급하기</button></div>';
+  }else{
+    var now=new Date(),from=new Date();from.setMonth(from.getMonth()-CT.per);
+    var list=S.tx.filter(function(x){return x.t>=from.getTime()}).slice().reverse();
+    var tin=0,tout=0;list.forEach(function(x){if(x.amt>0)tin+=x.amt;else tout-=x.amt});
+    var n=function(v){return v?v.toLocaleString('ko-KR'):''};
+    h='<div class="doc"><h3>거래내역증명서</h3><div class="sub">발급번호 모의-'+now.getFullYear()+p2(now.getMonth()+1)+p2(now.getDate())+'-'+S.no.slice(-4)+'</div>'+
+      '<dl><dt>성명</dt><dd>'+esc(S.name)+'</dd><dt>계좌번호</dt><dd>'+S.no+'</dd><dt>상품명</dt><dd>MY 입출금통장</dd>'+
+      '<dt>조회기간</dt><dd>'+ymd(from)+' ~ '+ymd(now)+'</dd><dt>거래건수</dt><dd>'+list.length+'건</dd></dl>'+
+      '<table><thead><tr><th>거래일시</th><th>내용</th><th>출금</th><th>입금</th><th>잔액</th></tr></thead><tbody>'+
+      (list.length?list.map(function(x){var d=new Date(x.t);
+        return '<tr><td>'+p2(d.getMonth()+1)+'.'+p2(d.getDate())+' '+p2(d.getHours())+':'+p2(d.getMinutes())+'</td><td>'+esc(x.who)+'</td><td>'+n(x.amt<0?-x.amt:0)+'</td><td>'+n(x.amt>0?x.amt:0)+'</td><td>'+x.bal.toLocaleString('ko-KR')+'</td></tr>'}).join(''):'<tr><td colspan="5" style="text-align:center">거래 내역이 없습니다</td></tr>')+
+      '</tbody><tfoot><tr><td colspan="2">합계</td><td>'+(n(tout)||'0')+'</td><td>'+(n(tin)||'0')+'</td><td></td></tr></tfoot></table>'+
+      '<div class="sign">위 내역은 수업용 모의 앱의 가상 거래임을 확인합니다.<br>'+ymd(now)+'<br><b>새싹뱅크 (모의 은행)</b><span class="seal">모의</span></div></div>'+
+      '<div class="hint" style="margin-top:12px">'+(CT.method==='PDF'?'모의 앱에서는 PDF 파일을 만들지 않고 화면으로 보여 줘요.':'')+'</div>'+
+      '<button class="cta" data-go="mng">확인</button>';
+  }
+  b.innerHTML=h;$('s-cert').scrollTop=0;
 }
 function render(){
   renderTabs();
@@ -756,6 +828,9 @@ document.addEventListener('click',function(e){
     if(d.per)EX.per=Number(d.per);else EX.typ=d.typ;
     t.parentNode.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b===t)});return;
   }
+  if(t.id==='certNext'){CT.step++;return drawCert()}
+  if(t.id==='certBack'){if(CT.step===1||CT.step===4)return go('mng');CT.step--;return drawCert()}
+  if(d.cper){CT.per=Number(d.cper);return drawCert()}
   if(t.id==='expDo')return expRun();
   if(t.id==='expBack')return $('expRes').style.display==='flex'?expShow(false):go('mng');
   if(d.cat){cat=d.cat;return render()}
@@ -785,6 +860,7 @@ document.addEventListener('click',function(e){
   if(t.id==='saveName'){var v=$('nameIn').value.trim();if(!v)return toast('이름을 입력해 주세요');S.name=v;save();toast('저장했어요');return go('home')}
   if(t.id==='reset'){if(t.dataset.sure){delete t.dataset.sure;t.textContent='처음부터 다시 시작';S=fresh();save();toast('처음 상태로 돌아갔어요');return go('home')}t.dataset.sure='1';t.textContent='한 번 더 누르면 모든 기록이 지워져요';setTimeout(function(){delete t.dataset.sure;t.textContent='처음부터 다시 시작'},4000)}
 });
+document.addEventListener('change',function(e){if(e.target.id==='certMethod'){CT.method=e.target.value;drawCert()}});
 render();
 if('serviceWorker' in navigator&&location.protocol==='https:'||location.hostname==='localhost')navigator.serviceWorker.register('sw.js').catch(function(){});
 })();
