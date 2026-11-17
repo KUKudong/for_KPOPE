@@ -296,7 +296,7 @@ function submitOrder() {
   } else {
     if (o.a > qty(o.c.s) + 1e-12) return e.textContent = "보유 수량이 부족합니다.";
     if (o.a * o.p < MIN_ORDER) return e.textContent = `최소 주문 금액은 ${won(MIN_ORDER)}원입니다.`;
-    S.bal[o.c.s].q = Math.max(0, S.bal[o.c.s].q - o.a); if (S.bal[o.c.s].q < 1e-10) delete S.bal[o.c.s];
+    S.bal[o.c.s].q = Math.max(0, S.bal[o.c.s].q - o.a); if (S.bal[o.c.s].q < 1e-8) delete S.bal[o.c.s];
     S.krw += o.krw; log("매도", o.c.s, o.q, o.krw);
   }
   save(); toast(`${o.c.s} ${o.side === "buy" ? "매수" : "매도"} 체결 (모의)`); render();
@@ -412,7 +412,7 @@ function submitWd() {
   if (!w.a || w.a <= 0) return e.textContent = "출금 수량을 입력하세요.";
   if (w.tot > qty(w.c.s) + 1e-12) return e.textContent = "출금가능 수량이 부족합니다. (수량 + 수수료)";
   if (!$("ck1").checked || !$("ck2").checked || !$("ck3").checked) return e.textContent = "확인 사항 3가지를 모두 체크하세요.";
-  S.bal[w.c.s].q = Math.max(0, S.bal[w.c.s].q - w.tot); if (S.bal[w.c.s].q < 1e-10) delete S.bal[w.c.s];
+  S.bal[w.c.s].q = Math.max(0, S.bal[w.c.s].q - w.tot); if (S.bal[w.c.s].q < 1e-8) delete S.bal[w.c.s];
   const tx = { id: "DEMO-" + rnd(40, "0123456789abcdef"), t: Date.now(), sym: w.c.s, net: w.net.id,
     q: w.a, fee: w.net.fee, addr: w.addr, tag: w.tag, done: false };
   S.hist.unshift({ t: tx.t, type: "출금", sym: w.c.s, q: w.a, krw: 0, memo: w.net.id, tx });
