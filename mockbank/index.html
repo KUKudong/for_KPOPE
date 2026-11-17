@@ -436,7 +436,7 @@ document.addEventListener('click',function(e){
   if(t.id==='noticeX'){S.notice=false;save();return render()}
   if(t.id==='copyNo'){if(navigator.clipboard)navigator.clipboard.writeText(S.no).catch(function(){});return toast('계좌번호를 복사했어요')}
   if(t.id==='saveName'){var v=$('nameIn').value.trim();if(!v)return toast('이름을 입력해 주세요');S.name=v;save();toast('저장했어요');return go('home')}
-  if(t.id==='reset'){if(confirm('모든 연습 기록을 지우고 처음부터 시작할까요?')){S=fresh();save();go('home')}}
+  if(t.id==='reset'){if(t.dataset.sure){delete t.dataset.sure;t.textContent='처음부터 다시 시작';S=fresh();save();toast('처음 상태로 돌아갔어요');return go('home')}t.dataset.sure='1';t.textContent='한 번 더 누르면 모든 기록이 지워져요';setTimeout(function(){delete t.dataset.sure;t.textContent='처음부터 다시 시작'},4000)}
 });
 render();
 if('serviceWorker' in navigator&&location.protocol==='https:'||location.hostname==='localhost')navigator.serviceWorker.register('sw.js').catch(function(){});
