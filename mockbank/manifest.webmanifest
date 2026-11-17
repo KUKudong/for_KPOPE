@@ -1,0 +1,17 @@
+{
+  "name": "새싹뱅크 (모의 학습용)",
+  "short_name": "새싹뱅크",
+  "description": "금융 수업을 위한 모의 은행 앱. 실제 은행이 아니며 실제 돈이 움직이지 않습니다.",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#e6eeea",
+  "theme_color": "#dbe6e1",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
