@@ -126,6 +126,56 @@ input{font:inherit;color:inherit}
 .note{font-size:12px;color:var(--sub);line-height:1.5;margin-top:10px}
 .toast{position:absolute;left:50%;bottom:84px;transform:translateX(-50%);background:rgba(240,244,242,.95);color:#0b1410;padding:10px 16px;border-radius:20px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap;z-index:9;max-width:92%;overflow:hidden;text-overflow:ellipsis}
 .toast.on{opacity:1}
+.ico{position:relative;width:26px;height:26px;opacity:1}
+.ico svg,.search svg{width:24px;height:24px;display:block}
+.ico.dot::after{content:"";position:absolute;right:-1px;top:0;width:6px;height:6px;border-radius:50%;background:var(--up)}
+.search svg{width:22px;height:22px;color:#c9d2ce}
+.tabs svg{display:block;width:22px;height:22px;margin:0 auto 4px;opacity:.8}
+.tabs .on svg{opacity:1;stroke-width:2.200}
+.mk button{position:relative}
+.mk .e::before{content:"";position:absolute;left:0;top:0;width:0;height:0;border-top:11px solid var(--up);border-right:11px solid transparent}
+.coin .cd{width:9px;height:28px;background:none}
+.coin .cd .w{left:4px;right:4px;top:2px;bottom:2px;opacity:.55}
+.dt{display:flex;border-bottom:1px solid var(--line);padding:0 8px}
+.dt button{padding:10px 14px;font-size:15px;color:#aab5b0}
+.dt button.on{color:#fff;box-shadow:inset 0 -2px 0 #e6ece9;font-weight:600}
+.ow{display:grid;grid-template-columns:41% 59%;border-bottom:1px solid var(--line)}
+.ob{border-right:1px solid var(--line)}
+.ob button{display:grid;grid-template-columns:1fr auto;align-items:center;width:100%;height:36px;padding:0 8px;border-bottom:1px solid var(--bg);font-size:13.5px;text-align:left;position:relative}
+.ob button.a{background:rgba(59,130,246,.12)}.ob button.b{background:rgba(229,72,77,.12)}
+.ob button.now{box-shadow:inset 0 0 0 1px #e6ece9}
+.ob button small{display:block;font-size:10.5px;opacity:.85}
+.ob button span{font-size:11px;color:#c9d2ce;text-align:right}
+.of{padding:10px 12px 14px;min-width:0}
+.of .side{margin:0 0 10px}
+.of .side button{padding:9px 0;font-size:14.5px}
+.rad{display:flex;gap:14px;font-size:13.5px;margin-bottom:8px;color:#c9d2ce}
+.rad button::before{content:"";display:inline-block;width:13px;height:13px;border-radius:50%;border:1.500px solid #5d6b65;vertical-align:-2px;margin-right:5px;box-sizing:border-box}
+.rad button.on{color:#fff}.rad button.on::before{border:4px solid var(--brand)}
+.of .inp{margin:6px 0;padding:0 8px}
+.of .inp input{font-size:15px;padding:10px 4px}
+.of .inp span{font-size:11.5px}
+.of .inp button{width:26px;height:26px;border-left:1px solid #2a3a33;font-size:17px;color:#c9d2ce;flex:none}
+.of .kv{font-size:13px}
+.of .pct button{padding:7px 0;font-size:12.5px}
+.of .go{padding:12px;font-size:15.5px;margin-top:10px}
+.tk{display:grid;grid-template-columns:1fr 1fr 1fr;padding:9px 16px;border-bottom:1px solid var(--line);font-size:13.5px;text-align:right}
+.tk span:first-child{text-align:left;color:var(--sub)}
+.obfull button{height:34px;padding:0 16px;font-size:14.5px}
+.rd{position:relative;padding:0 0 18px 26px;border-left:1px solid #2a3a33;margin-left:6px}
+.rd::before{content:"";position:absolute;left:-4.500px;top:6px;width:8px;height:8px;border-radius:50%;background:#3a4a43}
+.rd b{font-size:16px}.rd p{margin:6px 0;font-size:14.5px;line-height:1.55;color:#c9d2ce}.rd small{color:var(--sub);font-size:12.5px}
+.rd .ci{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#f1f4f2;color:#0b1410;font-size:11px;font-weight:800;margin-right:6px;vertical-align:2px}
+.rd .star{position:absolute;right:0;top:0;color:#4a5a53;font-size:18px}
+.pr{display:flex;align-items:center;justify-content:space-between;padding:16px;background:var(--bg);border-top:10px solid var(--panel);border-bottom:10px solid var(--panel)}
+.pr small{display:block;color:var(--sub);font-size:13px}.pr b{font-size:16px}
+.chk{display:flex;align-items:center;gap:10px;padding:12px 16px;font-size:15px;color:#c9d2ce;width:100%;text-align:left}
+.chk i{width:20px;height:20px;border-radius:50%;border:1.500px solid #5d6b65;display:grid;place-items:center;font-style:normal;font-size:12px}
+.chk.on i{background:var(--brand);border-color:var(--brand);color:#fff}
+.pf{display:flex;height:14px;border-radius:3px;overflow:hidden;margin:4px 16px 10px}
+.pfl{padding:0 16px 12px;font-size:13px;color:#c9d2ce;display:flex;flex-wrap:wrap;gap:6px 14px}
+.pfl i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+.cx{border:1px solid #2a3a33;border-radius:4px;padding:5px 10px;font-size:13px;color:#c9d2ce}
 </style>
 </head>
 <body>
@@ -147,13 +197,13 @@ input{font:inherit;color:inherit}
 
   <!-- 거래소 -->
   <section class="screen" id="s-mkt">
-    <div class="top"><span style="width:52px"></span>
+    <div class="top"><span style="width:66px"></span>
       <div class="seg2"><button class="on">거래소</button><button data-toast="NFT는 준비 중인 서비스예요">NFT</button></div>
-      <button class="ico" data-go="more">⚙</button><button class="ico" data-toast="새 알림이 없어요">💬</button></div>
-    <label class="search"><span>🔍</span><input id="q" placeholder="코인명/심볼 검색" autocomplete="off"></label>
+      <button class="ico" data-go="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3l1.600 2.200 2.700-.400.900 2.600 2.600.900-.400 2.700L21.600 12l-2.200 1.600.400 2.700-2.600.900-.900 2.600-2.700-.400L12 21l-1.600-2.200-2.700.400-.900-2.600-2.600-.900.400-2.700L2.400 12l2.200-1.600-.400-2.700 2.600-.900.900-2.600 2.700.400Z"/></svg></button><button class="ico dot" data-toast="새 알림이 없어요"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/><path d="M8 9h8M8 12h6"/></svg></button></div>
+    <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.500"/><path d="m16 16 4.500 4.500"/></svg><input id="q" placeholder="코인명/심볼 검색" autocomplete="off"></label>
     <div class="sumr" id="mktSum"></div>
     <div><div class="mk" id="mk">
-      <button class="on" data-mk="KRW">KRW</button><button data-mk="BTC">BTC</button><button data-mk="USDT">USDT</button><button data-mk="FAV">관심</button>
+      <button class="on" data-mk="KRW">KRW</button><button data-mk="BTC" class="e">BTC</button><button data-mk="USDT" class="e">USDT</button><button data-mk="FAV">관심</button>
     </div></div>
     <div class="cols" id="cols">
       <button data-sort="n">한글명 ⇄</button><button data-sort="p">현재가 ⇅</button><button data-sort="c">전일대비 ⇅</button><button data-sort="v" class="on">거래대금 ⇅</button>
@@ -163,25 +213,36 @@ input{font:inherit;color:inherit}
 
   <!-- 코인 상세 / 주문 -->
   <section class="screen" id="s-coin">
-    <div class="top"><button class="ico" data-go="mkt">‹</button><h1 id="dName"></h1><button class="ico" id="fav">☆</button></div>
-    <div class="dh"><div class="p" id="dP"></div><div class="c" id="dC"></div></div>
-    <canvas id="chart"></canvas>
-    <div class="side"><button class="buy on" data-side="buy">매수</button><button class="sell" data-side="sell">매도</button></div>
-    <div class="form">
-      <div class="kv"><span>주문가능</span><b id="dAvail" style="font-weight:500"></b></div>
-      <div class="kv"><span>주문유형</span><b style="font-weight:500">시장가</b></div>
-      <div class="inp"><span id="dUnit">주문총액 (KRW)</span><input id="amt" inputmode="decimal" autocomplete="off" placeholder="0"></div>
-      <div class="pct"><button data-pct="10">10%</button><button data-pct="25">25%</button><button data-pct="50">50%</button><button data-pct="100">최대</button></div>
-      <div class="kv" style="margin-top:10px"><span id="dEstL">예상 체결수량</span><b id="dEst" style="font-weight:500">-</b></div>
-      <button class="go buy" id="order">매수</button>
-      <div class="note">최소주문금액 5,000 KRW · 수수료 0.05% · 시장가 주문은 누르는 순간의 가격으로 바로 체결돼요.</div>
-      <div class="hold" id="dHold" style="padding:14px 0 0;border:0"></div>
+    <div class="top"><button class="ico" data-go="mkt" style="font-size:26px;line-height:22px">‹</button><h1 id="dName"></h1><button class="ico" id="fav" style="font-size:22px">☆</button></div>
+    <div class="dh" style="display:flex;justify-content:space-between;align-items:flex-end"><div><div class="p" id="dP"></div><div class="c" id="dC"></div></div><canvas id="mini" style="width:120px;height:44px"></canvas></div>
+    <div class="dt" id="dt"><button class="on" data-dt="order">주문</button><button data-dt="book">호가</button><button data-dt="chart">차트</button><button data-dt="ticks">시세</button><button data-dt="info">정보</button></div>
+    <div id="p-order">
+      <div class="ow">
+        <div class="ob" id="ob"></div>
+        <div class="of">
+          <div class="side"><button class="buy on" data-side="buy">매수</button><button class="sell" data-side="sell">매도</button><button data-jump="trades">거래내역</button></div>
+          <div class="rad" id="rad"><button class="on" data-ot="limit">지정가</button><button data-ot="market">시장가</button></div>
+          <div class="kv"><span>주문가능</span><b id="dAvail" style="font-weight:500"></b></div>
+          <div class="inp" id="rowPrice"><span>가격</span><input id="oPrice" inputmode="decimal" autocomplete="off"><button data-step="-1">−</button><button data-step="1">＋</button></div>
+          <div class="inp" id="rowQty"><span>수량</span><input id="oQty" inputmode="decimal" autocomplete="off" placeholder="0"></div>
+          <div class="pct"><button data-pct="10">10%</button><button data-pct="25">25%</button><button data-pct="50">50%</button><button data-pct="100">최대</button></div>
+          <div class="inp" id="rowTot"><span>총액</span><input id="oTot" inputmode="numeric" autocomplete="off" placeholder="0"></div>
+          <div class="kv"><span id="dEstL">주문총액</span><b id="dEst" style="font-weight:500">-</b></div>
+          <button class="go buy" id="order">매수</button>
+          <div class="note">최소주문금액 5,000 KRW · 수수료 0.05%</div>
+        </div>
+      </div>
+      <div class="hold" id="dHold" style="border:0"></div>
     </div>
+    <div id="p-book" class="ob obfull" style="display:none;border:0"></div>
+    <div id="p-chart" style="display:none"><canvas id="chart" style="height:300px"></canvas><div class="box" id="dStat"></div></div>
+    <div id="p-ticks" style="display:none"></div>
+    <div id="p-info" style="display:none"></div>
   </section>
 
   <!-- 코인정보 -->
   <section class="screen" id="s-info">
-    <div class="top"><h1>코인정보</h1><button class="ico" data-toast="새 알림이 없어요">💬</button></div>
+    <div class="top"><h1>코인정보</h1><button class="ico dot" data-toast="새 알림이 없어요"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/><path d="M8 9h8M8 12h6"/></svg></button></div>
     <div class="st"><button class="on">마켓</button><button data-toast="뉴스는 준비 중인 서비스예요">뉴스</button></div>
     <div class="idx" id="idx"></div>
     <button class="topg" id="topg"></button>
@@ -194,6 +255,8 @@ input{font:inherit;color:inherit}
         <div><span class="sub">시가총액 Top 5</span><b id="capAll"></b><canvas id="sp2"></canvas></div>
       </div>
     </div>
+    <button class="pr" data-go="inv" style="width:100%;text-align:left"><div><small>시세 확인부터 주문까지</small><b>내 투자 기록을 한눈에 보는 투자내역</b></div><span style="font-size:22px">📒</span></button>
+    <div style="padding:18px 16px 0"><div class="h2" style="font-size:18px">✦ 한눈에 읽기</div><div id="reads"></div></div>
     <div style="height:10px;background:var(--panel)"></div>
     <div style="padding:16px">
       <div class="h2">투자 전에 꼭 읽기</div>
@@ -206,14 +269,14 @@ input{font:inherit;color:inherit}
 
   <!-- 투자내역 -->
   <section class="screen" id="s-inv">
-    <div class="top"><h1>투자내역</h1><button class="ico" data-toast="새 알림이 없어요">💬</button></div>
+    <div class="top"><h1>투자내역</h1><button class="ico" data-toast="준비 중인 서비스예요"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9v10h14v-6"/><path d="M12 14c0-5 3-8 8-8M16 3l4 3-4 3"/></svg></button><button class="ico dot" data-toast="새 알림이 없어요"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/><path d="M8 9h8M8 12h6"/></svg></button></div>
     <div class="st" id="invTabs"><button class="on" data-it="hold">보유자산</button><button data-it="pnl">투자손익</button><button data-it="trades">거래내역</button><button data-it="open">미체결</button><button data-it="auto">자동주문</button></div>
     <div id="invBody"></div>
   </section>
 
   <!-- 입출금 -->
   <section class="screen" id="s-cash">
-    <div class="top"><h1>입출금</h1><button class="ico" data-toast="새 알림이 없어요">💬</button></div>
+    <div class="top"><h1>입출금</h1><button class="ico dot" data-toast="새 알림이 없어요"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/><path d="M8 9h8M8 12h6"/></svg></button></div>
     <div class="box">
       <div class="g2"><div class="big"><small>보유 KRW</small><b id="cKrw"></b></div><div class="big"><small id="cBankL">연결 계좌 잔액</small><b id="cBank"></b></div></div>
       <div class="sub" style="font-size:12.5px" id="cBankN"></div>
@@ -241,11 +304,11 @@ input{font:inherit;color:inherit}
   </section>
 
   <nav class="tabs" id="tabs" style="display:none">
-    <button class="on" data-go="mkt"><i>📈</i>거래소</button>
-    <button data-go="info"><i>📊</i>코인정보</button>
-    <button data-go="inv"><i>📄</i>투자내역</button>
-    <button data-go="cash"><i>⇄</i>입출금</button>
-    <button data-go="more"><i>▦</i>더보기</button>
+    <button class="on" data-go="mkt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10l8-6 8 6v10Z"/><path d="m8 15 3-3 2 2 3-4"/></svg>거래소</button>
+    <button data-go="info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1.500"/><path d="M9 16v-4M12 16V8M15 16v-6"/></svg>코인정보</button>
+    <button data-go="inv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6Z"/><path d="M9 11h7M9 14h7M9 17h4"/></svg>투자내역</button>
+    <button data-go="cash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h15l-3-3M20 15H5l3 3"/></svg>입출금</button>
+    <button data-go="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M17 14v6M14 17h6"/></svg>더보기</button>
   </nav>
   <div class="toast" id="toast"></div>
 </div>
@@ -253,13 +316,16 @@ input{font:inherit;color:inherit}
 <script>
 (function(){
 'use strict';
-var KEY='saessak-mockexchange-v1', BANK_KEY='saessak-mockbank-v4', FEE=0.0005, MIN=5000;
+var KEY='saessak-mockexchange-v2', BANK_KEY='saessak-mockbank-v4', FEE=0.0005, MIN=5000;
 /* 코인 목록: [심볼, 한글명, 시작가, 한 틱 변동성, 거래대금(백만), 표시] — 가격은 모두 가상 */
 var M=[
  ['USDT','테더',1358,0.0004,122223],['BTC','비트코인',88400000,0.0022,99166],['XRP','엑스알피(리플)',1340,0.004,99248],
  ['ETH','이더리움',2482000,0.003,61432],['SOL','솔라나',102000,0.0045,25746],['NEAR','니어프로토콜',4590,0.006,25025],
  ['DOGE','도지코인',142,0.007,21870],['SUI','수이',1005,0.006,6386],['ADA','에이다',212,0.005,4422],
  ['XLM','스텔라루멘',192,0.005,5774],['WLD','월드코인',367,0.007,6443],['ONDO','온도파이낸스',424,0.006,8786],
+ ['TRX','트론',412,0.003,9480],['LINK','체인링크',21500,0.005,8120],['AVAX','아발란체',31000,0.006,7350],['BCH','비트코인캐시',520000,0.004,6910],
+ ['DOT','폴카닷',5600,0.006,5230],['ETC','이더리움클래식',26000,0.005,4870],['HBAR','헤데라',240,0.007,4510],['APT','앱토스',6400,0.007,4120],
+ ['ARB','아비트럼',520,0.008,3760],['SEI','세이',310,0.008,3340],['STX','스택스',980,0.008,2980],
  ['SSAK','새싹코인',151,0.03,74078,'주'],['BOLT','번개코인',63.3,0.04,15580,'주']
 ];
 var IDX={};M.forEach(function(m,i){IDX[m[0]]=i});
@@ -285,9 +351,9 @@ function fresh(){
     for(i=0;i<60;i++){p=rp(p+(m[2]-p)*0.08+p*m[3]*(Math.random()*2-1));h.push(p)}
     px[m[0]]={p:m[2],prev:prev,hi:Math.max.apply(null,h.concat(m[2])),lo:Math.min.apply(null,h.concat(m[2])),h:h.concat(m[2]),v:m[4]};
   });
-  return {pin:'',krw:0,hold:{},trades:[],cash:[],px:px,fav:[],vbank:1000000,acct:'777-'+rnd(3)+'-'+rnd(6)};
+  return {pin:'',krw:0,hold:{},trades:[],cash:[],open:[],px:px,fav:[],vbank:1000000,acct:'777-'+rnd(3)+'-'+rnd(6)};
 }
-var X=load(KEY);if(!X||!X.px||!X.px.BTC)X=fresh();
+var X=load(KEY);if(!X||!X.px||!X.px.BTC||!X.open)X=fresh();
 function save(){store(KEY,X)}
 var toastT;
 function toast(m){var t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},2000)}
@@ -311,6 +377,7 @@ function tick(){
     x.h.push(x.p);if(x.h.length>90)x.h.shift();
     x.v+=Math.random()*m[4]*0.0006;
   });
+  matchOpen();
   ticks++;if(ticks%5===0)save();
   if(cur!=='pin')draw();
 }
@@ -324,13 +391,13 @@ function totals(){
 }
 
 /* ---------- 화면 ---------- */
-var cur='pin',mk='KRW',sortK='v',sortD=-1,sym='BTC',side='buy',it='hold',cs='in';
+var cur='pin',mk='KRW',sortK='v',sortD=-1,sym='BTC',side='buy',it='hold',cs='in',ot='limit',dtab='order',pfOpen=false,hideSmall=false;
 function go(n){
   cur=n;['pin','mkt','coin','info','inv','cash','more'].forEach(function(s){$('s-'+s).classList.toggle('on',s===n)});
   $('tabs').style.display=(n==='pin'||n==='coin')?'none':'flex';
   document.querySelectorAll('#tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.go===n)});
   $('s-'+n).scrollTop=0;
-  if(n==='coin'){$('amt').value='';}
+  if(n==='coin'){dtab='order';ot='limit';clearForm()}
   if(n==='cash'){$('cAmt').value='';}
   draw();
 }
@@ -351,8 +418,8 @@ function drawMkt(){
   });
   $('list').innerHTML=rows.length?rows.map(function(m){
     var x=X.px[m[0]],c=chg(m[0]),k=cls(c),col=c>=0?'var(--up)':'var(--down)';
-    var rng=(x.hi-x.lo)||1,top=(x.hi-Math.max(x.p,x.prev))/rng*100,ht=Math.max(4,Math.abs(x.p-x.prev)/rng*100);
-    return '<button class="coin" data-sym="'+m[0]+'"><span class="cd"><i style="top:'+Math.min(96,top)+'%;height:'+Math.min(100,ht)+'%;background:'+col+'"></i></span>'+
+    var hi=Math.max(x.hi,x.prev),lo=Math.min(x.lo,x.prev),rng=(hi-lo)||1,top=Math.min(94,(hi-Math.max(x.p,x.prev))/rng*100),ht=Math.min(100-top,Math.max(6,Math.abs(x.p-x.prev)/rng*100));
+    return '<button class="coin" data-sym="'+m[0]+'"><span class="cd"><i class="w" style="background:'+col+'"></i><i style="top:'+top+'%;height:'+ht+'%;background:'+col+'"></i></span>'+
       '<span class="nm"><b>'+m[1]+'</b>'+(m[5]?'<span class="tag">'+m[5]+'</span>':'')+'<small>'+m[0]+'/KRW</small></span>'+
       '<span class="'+k+'">'+fp(x.p)+'</span><span class="'+k+'">'+c.toFixed(2)+'%<small>'+fp(Math.abs(x.p-x.prev)).replace(/^/,c<0?'-':'')+'</small></span>'+
       '<span class="vol">'+fk(x.v)+'백만</span></button>';
@@ -366,22 +433,52 @@ function line(cv,h,col,fill){
   g.strokeStyle=col;g.lineWidth=1.6;g.stroke();
   if(fill){g.lineTo(w,ht);g.lineTo(0,ht);g.closePath();g.globalAlpha=.14;g.fillStyle=col;g.fill()}
 }
+function num(id){return parseFloat(String($(id).value).replace(/,/g,''))||0}
+function clearForm(){$('oPrice').value=String(X.px[sym].p);$('oQty').value='';$('oTot').value=''}
+function book(n){
+  var x=X.px[sym],t=tickSize(x.p),h='',i,pr,c,q;
+  for(i=n;i>=-n+1;i--){
+    pr=rp(x.p+t*i);if(pr<=0)continue;c=(pr-x.prev)/x.prev*100;
+    q=(Math.abs(Math.sin(pr*12.9898+Math.floor(Date.now()/4000)))*4+0.2)*(3e6/x.p);
+    h+='<button class="'+(i>0?'a':'b')+(i===0?' now':'')+'" data-op="'+pr+'"><b class="'+cls(c)+'" style="font-weight:500">'+fp(pr)+'<small>'+sg(c)+c.toFixed(2)+'%</small></b><span>'+fq(Math.round(q*1000)/1000)+'</span></button>';
+  }
+  return h;
+}
 function drawCoin(){
-  var m=M[IDX[sym]],x=X.px[sym],c=chg(sym),k=cls(c),h=X.hold[sym];
+  var m=M[IDX[sym]],x=X.px[sym],c=chg(sym),k=cls(c),h=X.hold[sym],col=c>=0?'#e5484d':'#3b82f6',buy=side==='buy',lim=ot==='limit';
   $('dName').innerHTML=m[1]+' <small class="sub" style="font-size:13px">'+sym+'/KRW</small>';
   $('fav').textContent=X.fav.indexOf(sym)>=0?'★':'☆';
   $('dP').className='p '+k;$('dP').textContent=fp(x.p);
   $('dC').className='c '+k;$('dC').textContent='전일대비 '+sg(c)+c.toFixed(2)+'%  '+(c<0?'▼':'▲')+' '+fp(Math.abs(x.p-x.prev));
-  line($('chart'),x.h,c>=0?'#e5484d':'#3b82f6',true);
-  document.querySelectorAll('#s-coin .side button').forEach(function(b){b.classList.toggle('on',b.dataset.side===side)});
-  var buy=side==='buy';
-  $('dAvail').textContent=buy?fk(X.krw)+' KRW':fq(h?h.q:0)+' '+sym;
-  $('dUnit').textContent=buy?'주문총액 (KRW)':'주문수량 ('+sym+')';
-  $('dEstL').textContent=buy?'예상 체결수량':'예상 받는 금액';
-  var v=parseFloat($('amt').value.replace(/,/g,''))||0;
-  $('dEst').textContent=v?(buy?fq(v*(1-FEE)/x.p)+' '+sym:fk(v*x.p*(1-FEE))+' KRW'):'-';
-  $('order').className='go '+side;$('order').textContent=buy?'매수':'매도';
-  $('dHold').innerHTML=h?holdHtml(sym):'';
+  line($('mini'),x.h,col,true);
+  document.querySelectorAll('#dt button').forEach(function(b){b.classList.toggle('on',b.dataset.dt===dtab)});
+  ['order','book','chart','ticks','info'].forEach(function(t){$('p-'+t).style.display=t===dtab?'block':'none'});
+  if(dtab==='order'){
+    $('ob').innerHTML=book(5);
+    document.querySelectorAll('#s-coin .side button[data-side]').forEach(function(b){b.classList.toggle('on',b.dataset.side===side)});
+    document.querySelectorAll('#rad button').forEach(function(b){b.classList.toggle('on',b.dataset.ot===ot)});
+    $('dAvail').textContent=buy?fk(X.krw)+' KRW':fq(h?h.q:0)+' '+sym;
+    $('rowPrice').style.display=lim?'flex':'none';
+    $('rowQty').style.display=(lim||!buy)?'flex':'none';
+    $('rowTot').style.display=(!lim&&buy)?'flex':'none';
+    var P=lim?num('oPrice'):x.p,Q=num('oQty'),T=num('oTot');
+    $('dEstL').textContent=(!lim&&buy)?'예상 체결수량':(buy?'주문총액':'받을 금액');
+    $('dEst').textContent=(!lim&&buy)?(T?fq(T/(1+FEE)/x.p)+' '+sym:'-'):(Q&&P?fk(P*Q)+' KRW':'-');
+    $('order').className='go '+side;$('order').textContent=buy?'매수':'매도';
+    $('dHold').innerHTML=h?holdHtml(sym):'';
+  }else if(dtab==='book'){$('p-book').innerHTML=book(9)}
+  else if(dtab==='chart'){
+    line($('chart'),x.h,col,true);
+    $('dStat').innerHTML='<div class="kv"><span>고가</span><b class="up">'+fp(x.hi)+'</b></div><div class="kv"><span>저가</span><b class="down">'+fp(x.lo)+'</b></div><div class="kv"><span>전일종가</span><b>'+fp(x.prev)+'</b></div><div class="kv"><span>거래대금</span><b>'+fk(x.v)+'백만</b></div>';
+  }else if(dtab==='ticks'){
+    var now=Date.now(),r='<div class="tk sub"><span>체결시간</span><span>체결가격</span><span>체결량</span></div>',i,pv,d;
+    for(i=x.h.length-1;i>Math.max(0,x.h.length-26);i--){pv=x.h[i];d=new Date(now-(x.h.length-1-i)*2000);
+      r+='<div class="tk"><span>'+p2(d.getHours())+':'+p2(d.getMinutes())+':'+p2(d.getSeconds())+'</span><span class="'+cls(pv-x.prev)+'">'+fp(pv)+'</span><span class="'+(pv>=x.h[i-1]?'up':'down')+'">'+fq(Math.round((Math.abs(Math.sin(pv*7.13+i))*2+0.05)*(2e6/pv)*1000)/1000)+'</span></div>'}
+    $('p-ticks').innerHTML=r;
+  }else{
+    $('p-info').innerHTML='<div class="box"><div class="kv"><span>한글명</span><b>'+m[1]+'</b></div><div class="kv"><span>심볼</span><b>'+sym+'</b></div><div class="kv"><span>마켓</span><b>KRW</b></div>'+
+      (m[5]?'<div class="kv"><span>거래 유의</span><b class="up">가격 변동이 매우 큰 종목</b></div>':'')+'</div><div class="note" style="padding:14px 16px">이 앱의 시세는 실제 시장과 관계없이 무작위로 움직이는 가상 시세예요.'+(m[0]==='SSAK'||m[0]==='BOLT'?' 이 코인은 수업을 위해 만든 가상의 코인이에요.':'')+'</div>';
+  }
 }
 function holdHtml(s){
   var h=X.hold[s],x=X.px[s],ev=h.q*x.p,pnl=ev-h.cost,k=cls(pnl);
@@ -406,23 +503,28 @@ function drawInfo(){
   var caps=X.px.BTC.h.map(function(_,i){return X.px.BTC.h[i]*19.8+X.px.ETH.h[Math.min(i,X.px.ETH.h.length-1)]*120+X.px.XRP.h[Math.min(i,X.px.XRP.h.length-1)]*58e6+X.px.SOL.h[Math.min(i,X.px.SOL.h.length-1)]*5.4e2+X.px.USDT.h[Math.min(i,X.px.USDT.h.length-1)]*1.4e5});
   $('capAll').innerHTML=Math.round(caps[caps.length-1]/1e6).toLocaleString('ko-KR')+'조 <small class="sub">KRW</small>';
   line($('sp1'),X.px.SSAK.h.map(function(v,i){return v+X.px.DOGE.h[Math.min(i,X.px.DOGE.h.length-1)]}),'#e5484d',true);
+  drawReads();
   line($('sp2'),caps,caps[caps.length-1]>=caps[0]?'#e5484d':'#3b82f6',true);
 }
 function drawInv(){
   document.querySelectorAll('#invTabs button').forEach(function(b){b.classList.toggle('on',b.dataset.it===it)});
   var t=totals(),h='',k=cls(t.pnl),syms=Object.keys(X.hold);
+  var shown=syms.filter(function(s){return !hideSmall||X.hold[s].q*X.px[s].p>=5000});
   if(it==='hold'){
     h='<div class="box"><div class="h2">내 보유자산</div><div class="g2"><div class="big"><small>보유 KRW</small><b>'+fk(X.krw)+'</b></div><div class="big"><small>총 보유자산</small><b>'+fk(X.krw+t.ev)+'</b></div></div>'+
       '<div class="g2"><div><div class="kv"><span>총 매수</span><b>'+fk(t.buy)+'</b></div><div class="kv"><span>총 평가</span><b>'+(syms.length?fk(t.ev):'-')+'</b></div><div class="kv"><span>주문가능</span><b>'+fk(X.krw)+'</b></div></div>'+
       '<div><div class="kv"><span>평가손익</span><b class="'+k+'">'+(syms.length?fk(t.pnl):'-')+'</b></div><div class="kv"><span>수익률</span><b class="'+k+'">'+(syms.length?t.rate.toFixed(2)+'%':'-')+'</b></div></div></div></div>'+
+      '<button class="lrow" id="pfT" style="font-weight:500;border-bottom:1px solid var(--line)">보유자산 포트폴리오<span>'+(pfOpen?'⌃':'⌄')+'</span></button>'+(pfOpen?pfHtml(t):'')+
       '<div class="promo"><div><small>거래하려면 먼저</small><b>은행 계좌에서 KRW를 입금하세요.</b></div><button class="bbtn" data-go="cash">＋ KRW입금</button></div>'+
-      (syms.length?syms.map(function(s){return '<button class="hold" data-sym="'+s+'" style="display:block;width:100%;text-align:left">'+holdHtml(s)+'</button>'}).join(''):'<div class="empty">보유한 코인이 없어요</div>')+
+      '<button class="chk'+(hideSmall?' on':'')+'" id="hideSmall"><i>'+(hideSmall?'✓':'')+'</i>거래미지원/소액 자산 숨기기</button>'+
+      (shown.length?shown.map(function(s){return '<button class="hold" data-sym="'+s+'" style="display:block;width:100%;text-align:left">'+holdHtml(s)+'</button>'}).join(''):'<div class="empty">보유한 코인이 없어요</div>')+
       '<button class="lrow" data-toast="준비 중인 서비스예요">NFT<span>0 개 ›</span></button><button class="lrow" data-toast="준비 중인 서비스예요">스테이킹<span>0 KRW ›</span></button><button class="lrow" data-toast="준비 중인 서비스예요" style="border-bottom:1px solid var(--line)">코인빌리기<span>0 KRW ›</span></button>';
   }else if(it==='pnl'){
     var real=0,fee=0,dep=0,wd=0;X.trades.forEach(function(r){real+=r.pnl||0;fee+=r.fee});X.cash.forEach(function(r){if(r.amt>0)dep+=r.amt;else wd-=r.amt});
-    var net=X.krw+t.ev+wd-dep;
+    var lk=0;X.open.forEach(function(o){lk+=o.side==='buy'?o.lock:o.q*X.px[o.sym].p});
+    var net=X.krw+t.ev+lk+wd-dep;
     h='<div class="box"><div class="h2">투자손익</div><div class="kv"><span>입금한 돈</span><b>'+fk(dep)+'</b></div><div class="kv"><span>출금한 돈</span><b>'+fk(wd)+'</b></div>'+
-      '<div class="kv"><span>지금 자산 (KRW + 코인)</span><b>'+fk(X.krw+t.ev)+'</b></div><div class="kv"><span>실현손익 (판 것)</span><b class="'+cls(real)+'">'+fk(real)+'</b></div>'+
+      '<div class="kv"><span>지금 자산 (KRW + 코인)</span><b>'+fk(X.krw+t.ev+lk)+'</b></div><div class="kv"><span>실현손익 (판 것)</span><b class="'+cls(real)+'">'+fk(real)+'</b></div>'+
       '<div class="kv"><span>평가손익 (갖고 있는 것)</span><b class="'+k+'">'+fk(t.pnl)+'</b></div><div class="kv"><span>낸 수수료</span><b>'+fk(fee)+'</b></div>'+
       '<div class="kv" style="border-top:1px solid var(--line);margin-top:8px;padding-top:10px;font-size:16px"><span>누적 손익</span><b class="'+cls(net)+'">'+sg(net)+fk(net)+' KRW</b></div></div>';
   }else if(it==='trades'){
@@ -431,8 +533,29 @@ function drawInv(){
         '<div class="kv"><span>체결가격</span><b>'+fp(r.p)+' KRW</b></div><div class="kv"><span>체결수량</span><b>'+fq(r.q)+' '+r.sym+'</b></div>'+
         '<div class="kv"><span>체결금액</span><b>'+fk(r.amt)+' KRW</b></div><div class="kv"><span>수수료</span><b>'+fk(r.fee)+' KRW</b></div>'+
         (b?'':'<div class="kv"><span>실현손익</span><b class="'+cls(r.pnl)+'">'+sg(r.pnl)+fk(r.pnl)+' KRW</b></div>')+'</div>'}).join(''):'<div class="empty">거래 내역이 없어요</div>';
-  }else h='<div class="empty">'+(it==='open'?'미체결 주문이 없어요':'자동주문은 준비 중인 서비스예요')+'</div>';
+  }else if(it==='open'){
+    h=X.open.length?X.open.map(function(o){var b=o.side==='buy';
+      return '<div class="tr"><div class="a"><b class="'+(b?'up':'down')+'">'+M[IDX[o.sym]][1]+' '+(b?'매수':'매도')+'</b><button class="cx" data-cancel="'+o.id+'">주문취소</button></div>'+
+        '<div class="kv"><span>주문시간</span><b>'+ft(o.t)+'</b></div><div class="kv"><span>주문가격</span><b>'+fp(o.p)+' KRW</b></div><div class="kv"><span>주문수량</span><b>'+fq(o.q)+' '+o.sym+'</b></div>'+
+        '<div class="kv"><span>현재가</span><b>'+fp(X.px[o.sym].p)+' KRW</b></div></div>'}).join(''):'<div class="empty">미체결 주문이 없어요</div>';
+  }else h='<div class="empty">자동주문은 준비 중인 서비스예요</div>';
   $('invBody').innerHTML=h;
+}
+var PFC=['#12a06b','#3b82f6','#e5484d','#d97706','#8b5cf6','#06b6d4','#9aa5a0'];
+function pfHtml(t){
+  var all=X.krw+t.ev,parts=[['KRW',X.krw]];Object.keys(X.hold).forEach(function(s){parts.push([s,X.hold[s].q*X.px[s].p])});
+  if(all<=0)return '<div class="empty" style="padding:24px">보유자산이 없어요</div>';
+  parts.sort(function(a,b){return b[1]-a[1]});
+  return '<div class="pf" style="margin-top:12px">'+parts.map(function(p,i){return '<i style="flex:'+Math.max(p[1],all*0.004)+';background:'+PFC[i%7]+'"></i>'}).join('')+'</div><div class="pfl">'+
+    parts.map(function(p,i){return '<span><i style="background:'+PFC[i%7]+'"></i>'+p[0]+' '+(p[1]/all*100).toFixed(1)+'%</span>'}).join('')+'</div>';
+}
+function drawReads(){
+  var top=null,bot=null;M.forEach(function(m){if(m[0]==='USDT')return;if(!top||chg(m[0])>chg(top[0]))top=m;if(!bot||chg(m[0])<chg(bot[0]))bot=m});
+  var items=[[top,'전일보다 크게 올랐어요. 이렇게 빨리 오른 코인은 같은 속도로 떨어질 수 있어서, 지금 따라 사면 가장 비싸게 사게 될 수 있어요.','방금 전'],
+    [bot,'전일보다 가장 많이 내렸어요. 어제 이 코인을 산 사람은 하루 만에 이만큼을 잃은 거예요.','방금 전'],
+    [M[IDX.BTC],'가장 많이 거래되는 코인이지만, 이 코인도 하루에 몇 퍼센트씩 오르내려요. 100만원이면 몇만원이 하루에 왔다 갔다 해요.','1분 전']];
+  $('reads').innerHTML=items.map(function(r){var c=chg(r[0][0]);
+    return '<div class="rd"><span class="star">★</span><span class="ci">'+r[0][0].charAt(0)+'</span><b>'+r[0][1]+'</b> <span class="'+cls(c)+'">'+sg(c)+c.toFixed(2)+'%</span><p>'+r[0][1]+(((r[0][1].charCodeAt(r[0][1].length-1)-0xAC00)%28)>0?'은 ':'는 ')+r[1]+'</p><small>'+r[2]+'</small></div>'}).join('');
 }
 function drawCash(){
   var b=bank();
@@ -445,26 +568,56 @@ function drawCash(){
 }
 
 /* ---------- 주문 ---------- */
+function fillBuy(sm,q,p,total,locked){
+  if(!locked)X.krw-=total;
+  var h=X.hold[sm]||(X.hold[sm]={q:0,cost:0});h.q+=q;h.cost+=total;
+  X.trades.unshift({t:Date.now(),sym:sm,side:'buy',p:p,q:q,amt:q*p,fee:Math.max(0,total-q*p)});
+}
+function takeHold(sm,q){var h=X.hold[sm],c=h.cost*(q/h.q);h.q-=q;h.cost-=c;if(h.q*X.px[sm].p<1)delete X.hold[sm];return c}
+function fillSell(sm,q,p,cost){
+  var gross=q*p,fee=gross*FEE,pnl=gross-fee-cost;X.krw+=gross-fee;
+  X.trades.unshift({t:Date.now(),sym:sm,side:'sell',p:p,q:q,amt:gross,fee:fee,pnl:pnl});return pnl;
+}
+function matchOpen(){
+  var done=0;
+  X.open=X.open.filter(function(o){var p=X.px[o.sym].p;
+    if(o.side==='buy'&&p<=o.p){fillBuy(o.sym,o.q,o.p,o.lock,true);done++;return false}
+    if(o.side==='sell'&&p>=o.p){fillSell(o.sym,o.q,o.p,o.cost);done++;return false}
+    return true});
+  if(done){save();toast('미체결 주문 '+done+'건이 체결됐어요')}
+}
 function order(){
-  var x=X.px[sym],v=parseFloat($('amt').value.replace(/,/g,''))||0,h=X.hold[sym];
+  var x=X.px[sym],h=X.hold[sym],lim=ot==='limit',P=lim?rp(num('oPrice')):x.p,Q=num('oQty'),T=num('oTot'),nm=M[IDX[sym]][1];
+  if(lim&&!(num('oPrice')>0))return toast('주문가격을 입력해 주세요');
   if(side==='buy'){
-    if(v<MIN)return toast('최소주문금액은 5,000 KRW예요');
-    if(v>X.krw+1e-6)return toast('주문가능 금액이 부족해요');
-    var fee=v*FEE,q=(v-fee)/x.p;
-    X.krw-=v;if(!h)h=X.hold[sym]={q:0,cost:0};h.q+=q;h.cost+=v;
-    X.trades.unshift({t:Date.now(),sym:sym,side:'buy',p:x.p,q:q,amt:v,fee:fee});
-    toast(M[IDX[sym]][1]+' '+fq(q)+'개를 샀어요');
+    if(!lim){
+      if(T<MIN)return toast('최소주문금액은 5,000 KRW예요');
+      if(T>X.krw+1e-6)return toast('주문가능 금액이 부족해요');
+      Q=T/(1+FEE)/x.p;fillBuy(sym,Q,x.p,T);toast(nm+' '+fq(Q)+'개를 샀어요');
+    }else{
+      if(!(Q>0))return toast('주문수량을 입력해 주세요');
+      if(P*Q<MIN)return toast('최소주문금액은 5,000 KRW예요');
+      var need=P*Q*(1+FEE);
+      if(need>X.krw+1e-6)return toast('주문가능 금액이 부족해요');
+      if(P>=x.p){fillBuy(sym,Q,x.p,x.p*Q*(1+FEE));toast(nm+' '+fq(Q)+'개를 샀어요')}
+      else{X.krw-=need;X.open.unshift({id:Date.now(),t:Date.now(),sym:sym,side:'buy',p:P,q:Q,lock:need});toast('매수 주문을 넣었어요 · 가격이 내려오면 체결돼요')}
+    }
   }else{
-    if(!h||v<=0)return toast('주문수량을 입력해 주세요');
-    if(v>h.q*(1+1e-9))return toast('보유수량이 부족해요');
-    v=Math.min(v,h.q);
-    var gross=v*x.p;if(gross<MIN&&v<h.q)return toast('최소주문금액은 5,000 KRW예요');
-    var f2=gross*FEE,cost=h.cost*(v/h.q),pnl=gross-f2-cost;
-    X.krw+=gross-f2;h.q-=v;h.cost-=cost;if(h.q*x.p<1)delete X.hold[sym];
-    X.trades.unshift({t:Date.now(),sym:sym,side:'sell',p:x.p,q:v,amt:gross,fee:f2,pnl:pnl});
-    toast('팔았어요 · 실현손익 '+sg(pnl)+fk(pnl)+' KRW');
+    if(!h||!(Q>0))return toast('주문수량을 입력해 주세요');
+    if(Q>h.q*(1+1e-9))return toast('보유수량이 부족해요');
+    Q=Math.min(Q,h.q);
+    if(Q*P<MIN&&Q<h.q)return toast('최소주문금액은 5,000 KRW예요');
+    var cost=takeHold(sym,Q);
+    if(!lim||P<=x.p){var pnl=fillSell(sym,Q,x.p,cost);toast('팔았어요 · 실현손익 '+sg(pnl)+fk(pnl)+' KRW')}
+    else{X.open.unshift({id:Date.now(),t:Date.now(),sym:sym,side:'sell',p:P,q:Q,cost:cost});toast('매도 주문을 넣었어요 · 가격이 올라오면 체결돼요')}
   }
-  $('amt').value='';save();draw();
+  $('oQty').value='';$('oTot').value='';save();draw();
+}
+function cancel(id){
+  X.open=X.open.filter(function(o){if(String(o.id)!==String(id))return true;
+    if(o.side==='buy')X.krw+=o.lock;else{var h=X.hold[o.sym]||(X.hold[o.sym]={q:0,cost:0});h.q+=o.q;h.cost+=o.cost}
+    return false});
+  save();toast('주문을 취소했어요');draw();
 }
 function cashDo(){
   var v=Math.floor(parseFloat($('cAmt').value.replace(/,/g,''))||0);
@@ -508,8 +661,20 @@ document.addEventListener('click',function(e){
   if(d.sym){sym=d.sym;side='buy';return go('coin')}
   if(d.mk){mk=d.mk;document.querySelectorAll('#mk button').forEach(function(b){b.classList.toggle('on',b===t)});return draw()}
   if(d.sort){if(sortK===d.sort)sortD=-sortD;else{sortK=d.sort;sortD=d.sort==='n'?1:-1}document.querySelectorAll('#cols button').forEach(function(b){b.classList.toggle('on',b===t)});return draw()}
-  if(d.side){side=d.side;$('amt').value='';return draw()}
-  if(d.pct){var h=X.hold[sym],pc=Number(d.pct)/100;$('amt').value=side==='buy'?String(Math.floor(X.krw*pc)):String(h?(pc===1?h.q:Math.floor(h.q*pc*1e8)/1e8):0);return draw()}
+  if(d.side){side=d.side;clearForm();return draw()}
+  if(d.ot){ot=d.ot;clearForm();return draw()}
+  if(d.dt){dtab=d.dt;return draw()}
+  if(d.op){dtab='order';ot='limit';$('oPrice').value=d.op;return draw()}
+  if(d.step){var cp=num('oPrice')||X.px[sym].p;$('oPrice').value=String(rp(cp+tickSize(cp)*Number(d.step)));return draw()}
+  if(d.jump){it=d.jump;return go('inv')}
+  if(d.cancel)return cancel(d.cancel);
+  if(t.id==='pfT'){pfOpen=!pfOpen;return draw()}
+  if(t.id==='hideSmall'){hideSmall=!hideSmall;return draw()}
+  if(d.pct){var h=X.hold[sym],pc=Number(d.pct)/100,fl=function(v){return String(Math.floor(v*1e8)/1e8)};
+    if(side==='sell')$('oQty').value=h?(pc===1?String(h.q):fl(h.q*pc)):'0';
+    else if(ot==='market')$('oTot').value=String(Math.floor(X.krw*pc));
+    else{var pp=num('oPrice')||X.px[sym].p;$('oQty').value=fl(X.krw*pc/(1+FEE)/pp)}
+    return draw()}
   if(d.it){it=d.it;return draw()}
   if(d.cs){cs=d.cs;$('cAmt').value='';return draw()}
   if(d.cadd){var mx=cs==='in'?bankBal():Math.floor(X.krw);$('cAmt').value=String(d.cadd==='all'?mx:(parseInt($('cAmt').value,10)||0)+Number(d.cadd));return}
@@ -522,7 +687,7 @@ document.addEventListener('click',function(e){
     delete t.dataset.sure;t.firstChild.textContent='거래소 기록 모두 지우기';var keep=X.pin;X=fresh();X.pin=keep;save();toast('처음 상태로 돌아갔어요');return go('mkt');
   }
 });
-document.addEventListener('input',function(e){if(e.target.id==='q'||e.target.id==='amt')draw()});
+document.addEventListener('input',function(e){if(['q','oPrice','oQty','oTot'].indexOf(e.target.id)>=0)draw()});
 pinKeys();pinDraw();
 setInterval(tick,2000);
 window.__tick=tick;
