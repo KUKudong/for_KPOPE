@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>모의 거래소 (교육용 데모)</title>
+<style>
+  :root {
+    --bg: #0a1224; --panel: #101a30; --line: #1c2740; --text: #e8ecf3; --sub: #7f8aa3;
+    --blue: #1763e0; --navy: #0b327f; --up: #e0454d; --down: #3b82f6; --warn: #f5a524;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; background: #05080f; color: var(--text);
+    font-family: -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif; }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; border: 0; background: none; }
+  #app { max-width: 480px; height: 100%; margin: 0 auto; background: var(--bg);
+    display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .demo-bar { background: var(--warn); color: #1a1200; font-size: 12px; font-weight: 700;
+    text-align: center; padding: 5px 8px; flex: none; }
+  #view { flex: 1; overflow-y: auto; }
+  .tabbar { flex: none; display: flex; background: var(--navy); padding-bottom: env(safe-area-inset-bottom); }
+  .tabbar button { flex: 1; padding: 10px 0 9px; font-size: 12px; color: #b9c6e6; }
+  .tabbar button.on { color: #fff; font-weight: 700; }
+  .tabbar .ico { display: block; font-size: 18px; margin-bottom: 2px; }
+  .head { display: flex; align-items: center; gap: 8px; padding: 14px 16px; font-size: 19px; font-weight: 700; }
+  .head .back { font-size: 22px; padding: 0 6px 0 0; }
+  .sub { color: var(--sub); } .up { color: var(--up); } .down { color: var(--down); }
+  .right { text-align: right; } .small { font-size: 12px; } .mt { margin-top: 12px; }
+  .summary { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; padding: 10px 16px;
+    background: var(--panel); font-size: 13px; }
+  .summary div { display: flex; justify-content: space-between; }
+  .row { display: flex; align-items: center; padding: 13px 16px; border-bottom: 1px solid var(--line); width: 100%; text-align: left; }
+  .row .name { flex: 1.5; } .row .name b { display: block; font-weight: 500; font-size: 15px; }
+  .row .col { flex: 1; text-align: right; font-size: 14px; }
+  .thead { display: flex; padding: 8px 16px; font-size: 12px; color: var(--sub); border-bottom: 1px solid var(--line); }
+  .thead span { flex: 1; text-align: right; } .thead span:first-child { flex: 1.5; text-align: left; }
+  .coin { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center;
+    justify-content: center; font-size: 11px; font-weight: 800; color: #fff; margin-right: 12px; flex: none; }
+  .pad { padding: 16px; }
+  .big { font-size: 28px; font-weight: 800; }
+  .btn { display: block; width: 100%; padding: 14px; border-radius: 6px; background: var(--blue);
+    color: #fff; font-weight: 700; font-size: 16px; text-align: center; }
+  .btn.ghost { background: #16264a; color: #8fb4ff; } .btn.red { background: var(--up); }
+  .btn.sell { background: var(--down); } .btn:disabled { opacity: .4; cursor: default; }
+  .btns { display: flex; gap: 10px; }
+  label.f { display: block; font-size: 13px; color: var(--sub); margin: 14px 0 6px; }
+  input.in, select.in { width: 100%; padding: 12px; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 6px; font-size: 16px; outline: none; }
+  input.in:focus, select.in:focus { border-color: var(--blue); }
+  .chips { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .chips button { flex: 1; padding: 8px 4px; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 4px; font-size: 13px; white-space: nowrap; }
+  .note { background: #14203b; border-left: 3px solid var(--warn); padding: 10px 12px; font-size: 13px;
+    line-height: 1.55; border-radius: 0 4px 4px 0; margin-top: 14px; color: #cfd8ea; }
+  .note b { color: #ffd27a; }
+  .kv { display: flex; justify-content: space-between; padding: 7px 0; font-size: 14px; }
+  .err { color: #ff8088; font-size: 13px; margin-top: 8px; min-height: 18px; }
+  .seg { display: flex; border-bottom: 1px solid var(--line); }
+  .seg button { flex: 1; padding: 12px; color: var(--sub); font-weight: 700; border-bottom: 2px solid transparent; }
+  .seg button.on.buy { color: var(--up); border-color: var(--up); }
+  .seg button.on.sell { color: var(--down); border-color: var(--down); }
+  .seg button.on { color: #fff; border-color: var(--blue); }
+  .check { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; padding: 6px 0; line-height: 1.4; }
+  .check input { margin-top: 3px; width: 16px; height: 16px; flex: none; }
+  .badge { font-size: 11px; padding: 2px 6px; border-radius: 3px; background: #3a2a10; color: #ffb866; }
+  .badge.ok { background: #10331f; color: #5fd38d; }
+  .mission li { padding: 8px 0; list-style: none; font-size: 14px; } .mission { padding: 0; margin: 0; }
+  .mission .done { color: #5fd38d; } .mono { font-family: ui-monospace, Menlo, Consolas, monospace; word-break: break-all; }
+  /* PIN */
+  #pin { position: absolute; inset: 0; background: var(--navy); z-index: 10; display: flex; flex-direction: column;
+    align-items: center; padding: 60px 0 20px; }
+  #pin h2 { margin: 30px 0 6px; } .dots { display: flex; gap: 14px; margin: 24px 0; }
+  .dots i { width: 13px; height: 13px; border-radius: 50%; background: #2a4c95; } .dots i.on { background: #fff; }
+  .logo { font-weight: 900; font-style: italic; font-size: 30px; letter-spacing: 1px; }
+  .logo small { display: block; font-style: normal; font-size: 12px; font-weight: 600; text-align: center; opacity: .8; }
+  .keys { margin-top: auto; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .keys button { padding: 20px 0; font-size: 24px; color: #fff; }
+  .toast { position: absolute; left: 50%; bottom: 90px; transform: translateX(-50%); background: #0a1a3d;
+    border: 1px solid #25407c; padding: 10px 18px; border-radius: 22px; font-size: 14px; z-index: 20;
+    white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="demo-bar">⚠ 교육용 모의 앱 · 실제 업비트가 아니며 실제 돈·코인이 오가지 않습니다</div>
+  <div id="view"></div>
+  <nav class="tabbar" id="tabbar"></nav>
+  <div id="pin"></div>
+</div>
+<script>
+"use strict";
+/* ============================================================
+   모의 거래소 (교육용 데모)
+   - 실제 거래소와 연결되지 않습니다. 모든 시세·잔고·주소·TXID는 가상입니다.
+   - 상태는 이 브라우저의 localStorage 에만 저장됩니다.
+   ============================================================ */
+const KEY = "mockExchangeDemo.v1";
+const FEE_RATE = 0.0005;      // 거래 수수료 0.05% (예시)
+const MIN_ORDER = 5000;       // 최소 주문 금액 (예시)
+
+// 가상 시세의 시작값과 네트워크 정보. 수수료는 학습용 예시 값입니다.
+const COINS = [
+  { s: "USDT", n: "테더", c: "#26a17b", p: 1359, nets: [
+      { id: "TRC20", label: "Tron (TRC20)", fee: 1, re: /^T[1-9A-HJ-NP-Za-km-z]{33}$/ },
+      { id: "ERC20", label: "Ethereum (ERC20)", fee: 8, re: /^0x[0-9a-fA-F]{40}$/ } ] },
+  { s: "XRP", n: "엑스알피(리플)", c: "#3a4250", p: 1326, tag: true, nets: [
+      { id: "XRP", label: "XRP Ledger", fee: 1, re: /^r[1-9A-HJ-NP-Za-km-z]{24,34}$/ } ] },
+  { s: "TRX", n: "트론", c: "#c23631", p: 412, nets: [
+      { id: "TRC20", label: "Tron (TRC20)", fee: 1, re: /^T[1-9A-HJ-NP-Za-km-z]{33}$/ } ] },
+  { s: "BTC", n: "비트코인", c: "#f7931a", p: 88429000, nets: [
+      { id: "BTC", label: "Bitcoin", fee: 0.0008, re: /^(bc1[0-9a-z]{25,60}|[13][1-9A-HJ-NP-Za-km-z]{25,34})$/ } ] },
+  { s: "ETH", n: "이더리움", c: "#627eea", p: 2482000, nets: [
+      { id: "ERC20", label: "Ethereum (ERC20)", fee: 0.009, re: /^0x[0-9a-fA-F]{40}$/ } ] },
+  { s: "SOL", n: "솔라나", c: "#7c4dff", p: 100400, nets: [
+      { id: "SOL", label: "Solana", fee: 0.01, re: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/ } ] },
+  { s: "DOGE", n: "도지코인", c: "#b59a30", p: 80.9, nets: [
+      { id: "DOGE", label: "Dogecoin", fee: 4, re: /^D[1-9A-HJ-NP-Za-km-z]{33}$/ } ] },
+];
+const coin = s => COINS.find(c => c.s === s);
+const price = {}, base = {};
+COINS.forEach(c => { base[c.s] = c.p; price[c.s] = c.p * (1 + (Math.random() - .5) * .03); });
+
+/* ---------- 상태 ---------- */
+const fresh = () => ({ krw: 0, bal: {}, hist: [], deposited: false, bought: false, withdrew: false });
+let S;
+try { S = Object.assign(fresh(), JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) { S = fresh(); }
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+const qty = s => (S.bal[s] ? S.bal[s].q : 0);
+const log = (type, sym, q, krw, memo) => { S.hist.unshift({ t: Date.now(), type, sym, q, krw, memo: memo || "" }); S.hist = S.hist.slice(0, 200); };
+
+/* ---------- 유틸 ---------- */
+const $ = id => document.getElementById(id);
+const esc = v => String(v).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+const won = v => Math.floor(v).toLocaleString("ko-KR");
+const fp = v => v >= 100 ? Math.round(v).toLocaleString("ko-KR") : v >= 1 ? v.toFixed(1) : v.toFixed(3);
+const fq = v => (+(+v).toFixed(8)).toLocaleString("ko-KR", { maximumFractionDigits: 8 });
+const num = v => { const n = parseFloat(String(v).replace(/,/g, "")); return isFinite(n) ? n : 0; };
+const B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+const rnd = (n, abc) => Array.from({ length: n }, () => abc[Math.floor(Math.random() * abc.length)]).join("");
+function sampleAddr(net) {
+  switch (net) {
+    case "TRC20": return "T" + rnd(33, B58);
+    case "ERC20": return "0x" + rnd(40, "0123456789abcdef");
+    case "XRP": return "r" + rnd(33, B58);
+    case "BTC": return "bc1q" + rnd(38, "023456789acdefghjklmnpqrstuvwxyz");
+    case "SOL": return rnd(44, B58);
+    case "DOGE": return "D" + rnd(33, B58);
+  }
+  return "";
+}
+let toastT;
+function toast(msg) {
+  document.querySelectorAll(".toast").forEach(e => e.remove());
+  const d = document.createElement("div"); d.className = "toast"; d.textContent = msg; $("app").appendChild(d);
+  clearTimeout(toastT); toastT = setTimeout(() => d.remove(), 2200);
+}
+const icon = c => `<span class="coin" style="background:${c.c}">${c.s.slice(0, 4)}</span>`;
+const totalEval = () => COINS.reduce((a, c) => a + qty(c.s) * price[c.s], 0);
+const totalBuy = () => COINS.reduce((a, c) => a + (S.bal[c.s] ? S.bal[c.s].q * S.bal[c.s].avg : 0), 0);
+
+/* ---------- 라우터 ---------- */
+let route = { tab: "market" };
+const TABS = [["market", "📈", "거래소"], ["history", "🧾", "투자내역"], ["wallet", "⇄", "입출금"], ["more", "▦", "더보기"]];
+function go(r) { route = r; render(); $("view").scrollTop = 0; }
+function render() {
+  $("tabbar").innerHTML = TABS.map(([k, i, l]) =>
+    `<button class="${route.tab === k ? "on" : ""}" data-go="${k}"><span class="ico">${i}</span>${l}</button>`).join("");
+  const v = $("view");
+  if (route.page === "order") v.innerHTML = vOrder();
+  else if (route.page === "krw") v.innerHTML = vKrw();
+  else if (route.page === "asset") v.innerHTML = vAsset();
+  else if (route.page === "withdraw") v.innerHTML = vWithdraw();
+  else if (route.page === "result") v.innerHTML = vResult();
+  else v.innerHTML = ({ market: vMarket, history: vHistory, wallet: vWallet, more: vMore })[route.tab]();
+  if (route.page === "order") calcOrder();
+  if (route.page === "withdraw") calcWd();
+}
+
+/* ---------- 거래소 ---------- */
+function chg(s) { const d = price[s] - base[s]; return { d, pct: d / base[s] * 100, cls: d > 0 ? "up" : d < 0 ? "down" : "" }; }
+function vMarket() {
+  const ev = totalEval(), by = totalBuy(), pl = ev - by;
+  return `<div class="head">거래소 <span class="badge">가상 시세</span></div>
+  <div class="summary">
+    <div><span class="sub">총 매수</span><span>${won(by)}</span></div>
+    <div><span class="sub">평가손익</span><span id="m-pl" class="${pl > 0 ? "up" : pl < 0 ? "down" : ""}">${won(pl)}</span></div>
+    <div><span class="sub">총 평가</span><span id="m-ev">${won(ev)}</span></div>
+    <div><span class="sub">보유 KRW</span><span>${won(S.krw)}</span></div>
+  </div>
+  <div class="thead"><span>한글명</span><span>현재가</span><span>전일대비</span></div>
+  ${COINS.map(c => { const g = chg(c.s); return `<button class="row" data-order="${c.s}">
+    <span class="name"><b>${c.n}</b><span class="sub small">${c.s}/KRW</span></span>
+    <span class="col ${g.cls}" data-p="${c.s}">${fp(price[c.s])}</span>
+    <span class="col ${g.cls}" data-c="${c.s}">${g.pct.toFixed(2)}%</span></button>`; }).join("")}
+  <div class="pad sub small">시세는 무작위로 움직이는 가상 값이며 실제 시장 가격과 무관합니다.</div>`;
+}
+
+/* ---------- 주문 ---------- */
+function vOrder() {
+  const c = coin(route.sym), side = route.side || "buy", g = chg(c.s);
+  return `<div class="head"><button class="back" data-go="market">‹</button>${c.n} <span class="sub small">${c.s}/KRW</span></div>
+  <div class="pad" style="padding-top:0"><span class="big ${g.cls}" data-p="${c.s}">${fp(price[c.s])}</span>
+    <span class="${g.cls}" data-c="${c.s}">${g.pct.toFixed(2)}%</span></div>
+  <div class="seg"><button class="${side === "buy" ? "on buy" : ""}" data-side="buy">매수</button>
+    <button class="${side === "sell" ? "on sell" : ""}" data-side="sell">매도</button></div>
+  <div class="pad">
+    <div class="kv"><span class="sub">주문가능</span><span>${side === "buy" ? won(S.krw) + " KRW" : fq(qty(c.s)) + " " + c.s}</span></div>
+    <div class="kv"><span class="sub">주문유형</span><span>시장가 (현재가로 즉시 체결)</span></div>
+    <label class="f">${side === "buy" ? "매수 금액 (KRW)" : "매도 수량 (" + c.s + ")"}</label>
+    <input class="in" id="o-amt" inputmode="decimal" placeholder="0" autocomplete="off">
+    <div class="chips">${[10, 25, 50, 100].map(p => `<button data-pct="${p}">${p}%</button>`).join("")}</div>
+    <div class="kv mt"><span class="sub">수수료 (0.05%, 예시)</span><span id="o-fee">0 KRW</span></div>
+    <div class="kv"><span class="sub">${side === "buy" ? "받는 수량" : "받는 금액"}</span><span id="o-out">-</span></div>
+    <div class="err" id="o-err"></div>
+    <button class="btn ${side === "buy" ? "red" : "sell"}" id="o-go">${side === "buy" ? "매수" : "매도"} (모의)</button>
+    ${c.s === "BTC" || c.s === "ETH" ? `<div class="note"><b>전송용으로는?</b> ${c.n}은 네트워크 수수료가 비싸고 느린 편입니다. 거래소 간 이동에는 수수료가 싸고 빠른 코인(예: XRP, TRX)이나 USDT를 쓰는 경우가 많습니다.</div>` : ""}
+  </div>`;
+}
+function orderVals() {
+  const c = coin(route.sym), side = route.side || "buy", a = num($("o-amt").value), p = price[c.s];
+  if (side === "buy") { const fee = a * FEE_RATE; return { side, c, a, p, fee, krw: a, q: (a - fee) / p }; }
+  const gross = a * p, fee = gross * FEE_RATE; return { side, c, a, p, fee, krw: gross - fee, q: a };
+}
+function calcOrder() {
+  if (!$("o-amt")) return; const o = orderVals();
+  $("o-fee").textContent = won(o.fee) + " KRW";
+  $("o-out").textContent = !o.a ? "-" : o.side === "buy" ? "≈ " + fq(o.q) + " " + o.c.s : "≈ " + won(o.krw) + " KRW";
+}
+function submitOrder() {
+  const o = orderVals(), e = $("o-err");
+  if (!o.a || o.a <= 0) return e.textContent = "금액(수량)을 입력하세요.";
+  if (o.side === "buy") {
+    if (o.a < MIN_ORDER) return e.textContent = `최소 주문 금액은 ${won(MIN_ORDER)}원입니다.`;
+    if (o.a > S.krw) return e.textContent = "주문가능 금액이 부족합니다. 먼저 KRW를 입금하세요.";
+    const b = S.bal[o.c.s] || { q: 0, avg: 0 };
+    b.avg = (b.q * b.avg + o.a) / (b.q + o.q); b.q += o.q; S.bal[o.c.s] = b; S.krw -= o.a; S.bought = true;
+    log("매수", o.c.s, o.q, o.a);
+  } else {
+    if (o.a > qty(o.c.s) + 1e-12) return e.textContent = "보유 수량이 부족합니다.";
+    if (o.a * o.p < MIN_ORDER) return e.textContent = `최소 주문 금액은 ${won(MIN_ORDER)}원입니다.`;
+    S.bal[o.c.s].q = Math.max(0, S.bal[o.c.s].q - o.a); if (S.bal[o.c.s].q < 1e-10) delete S.bal[o.c.s];
+    S.krw += o.krw; log("매도", o.c.s, o.q, o.krw);
+  }
+  save(); toast(`${o.c.s} ${o.side === "buy" ? "매수" : "매도"} 체결 (모의)`); render();
+}
+
+/* ---------- 입출금 ---------- */
+function vWallet() {
+  const tot = S.krw + totalEval();
+  return `<div class="head">입출금</div>
+  <div class="pad" style="padding-top:0"><div class="sub small">총 보유자산</div><div class="big"><span id="w-tot">${won(tot)}</span> KRW</div>
+    <div class="mt"><button class="btn" data-page="krw">→ KRW 입금 (모의 은행)</button></div></div>
+  <button class="row" data-page="krw">${`<span class="coin" style="background:#1447b8">₩</span>`}
+    <span class="name"><b>원화</b><span class="sub small">KRW</span></span><span class="col"><b>${won(S.krw)}</b></span></button>
+  ${COINS.map(c => `<button class="row" data-asset="${c.s}">${icon(c)}
+    <span class="name"><b>${c.n}</b><span class="sub small">${c.s}</span></span>
+    <span class="col"><b>${fq(qty(c.s))}</b><br><span class="sub small" data-v="${c.s}">${won(qty(c.s) * price[c.s])} KRW</span></span></button>`).join("")}`;
+}
+function vKrw() {
+  return `<div class="head"><button class="back" data-go="wallet">‹</button>KRW 입금</div>
+  <div class="pad" style="padding-top:0">
+    <div class="kv"><span class="sub">연결 계좌</span><span>모의 케이뱅크 (가상 계좌)</span></div>
+    <div class="kv"><span class="sub">보유 KRW</span><span>${won(S.krw)} 원</span></div>
+    <label class="f">입금 금액</label>
+    <input class="in" id="k-amt" inputmode="numeric" placeholder="최소 5,000원" autocomplete="off">
+    <div class="chips">${[10000, 100000, 500000, 1000000].map(v => `<button data-add="${v}">+${v >= 10000 ? v / 10000 + "만" : v}</button>`).join("")}</div>
+    <div class="err" id="k-err"></div>
+    <button class="btn" id="k-go">입금 신청 (모의)</button>
+    <div class="note"><b>실제 흐름은?</b><br>
+      ① 거래소 앱에서 본인 명의 은행 계좌(실명확인 입출금계좌)를 연결합니다.<br>
+      ② 은행 계좌에 돈을 넣어 둔 뒤, 거래소 앱에서 입금 금액을 입력하고 간편인증을 합니다.<br>
+      ③ 은행 → 거래소로 원화가 넘어옵니다.<br>
+      <b>주의:</b> 실제 거래소는 원화 입금 직후 일정 시간(예: 24시간) 동안 그 금액만큼의 코인 출금을 막는
+      <b>출금 지연 제도</b>를 운영합니다. 이 데모에서는 기다리지 않습니다. 세부 규정은 바뀔 수 있으니 실제 공지를 확인하세요.</div>
+  </div>`;
+}
+function submitKrw() {
+  const a = Math.floor(num($("k-amt").value)), e = $("k-err");
+  if (a < 5000) return e.textContent = "최소 입금 금액은 5,000원입니다.";
+  if (a > 100000000) return e.textContent = "데모에서는 1회 1억 원까지만 입금할 수 있습니다.";
+  $("k-go").disabled = true; $("k-go").textContent = "간편인증 중… (모의)";
+  setTimeout(() => { S.krw += a; S.deposited = true; log("KRW 입금", "KRW", 0, a, "모의 케이뱅크"); save();
+    toast(`${won(a)}원 입금 완료 (모의)`); go({ tab: "wallet" }); }, 1200);
+}
+function vAsset() {
+  const c = coin(route.sym), q = qty(c.s);
+  const h = S.hist.filter(x => x.sym === c.s).slice(0, 20);
+  return `<div class="head"><button class="back" data-go="wallet">‹</button>${c.n} 입출금</div>
+  <div class="pad" style="padding-top:0"><div class="sub small">보유 수량</div>
+    <div class="big">${fq(q)} <span style="font-size:16px">${c.s}</span></div>
+    <div class="sub small">≈ ${won(q * price[c.s])} KRW</div>
+    <div class="btns mt"><button class="btn ghost" data-order="${c.s}">매수/매도</button>
+      <button class="btn" data-wd="${c.s}">출금하기</button></div></div>
+  <div class="thead"><span>내역</span><span>수량</span><span>상태</span></div>
+  ${h.length ? h.map(histRow).join("") : `<div class="pad sub">내역이 없습니다.</div>`}`;
+}
+
+/* ---------- 출금 ---------- */
+function vWithdraw() {
+  const c = coin(route.sym), q = qty(c.s);
+  return `<div class="head"><button class="back" data-asset="${c.s}">‹</button>${c.s} 출금</div>
+  <div class="pad" style="padding-top:0">
+    <div class="kv"><span class="sub">출금가능</span><span>${fq(q)} ${c.s}</span></div>
+    <label class="f">출금 네트워크</label>
+    <select class="in" id="w-net">${c.nets.map(n => `<option value="${n.id}">${n.label}</option>`).join("")}</select>
+    <label class="f">받는 주소 (모의 바이낸스의 ${c.s} 입금 주소)</label>
+    <input class="in mono" id="w-addr" placeholder="주소를 붙여넣으세요" autocomplete="off" spellcheck="false">
+    <div class="chips"><button id="w-sample">연습용 가짜 주소 채우기</button></div>
+    ${c.tag ? `<label class="f">데스티네이션 태그 (필수)</label>
+      <input class="in" id="w-tag" inputmode="numeric" placeholder="숫자 태그" autocomplete="off">` : ""}
+    <label class="f">출금 수량</label>
+    <input class="in" id="w-amt" inputmode="decimal" placeholder="0" autocomplete="off">
+    <div class="chips"><button id="w-max">최대</button></div>
+    <div class="kv mt"><span class="sub">네트워크 수수료 (예시)</span><span id="w-fee">-</span></div>
+    <div class="kv"><span class="sub">총 차감 수량</span><span id="w-tot2">-</span></div>
+    <div class="kv"><span class="sub">상대 거래소 도착 수량</span><span id="w-recv">-</span></div>
+    <div class="mt">
+      <label class="check"><input type="checkbox" id="ck1">받는 거래소에서 고른 입금 네트워크와 여기서 고른 출금 네트워크가 같습니다.</label>
+      <label class="check"><input type="checkbox" id="ck2">주소${c.tag ? "와 태그" : ""}를 처음·끝 글자까지 다시 확인했습니다.</label>
+      <label class="check"><input type="checkbox" id="ck3">블록체인 전송은 취소·되돌리기가 안 된다는 것을 이해했습니다.</label>
+    </div>
+    <div class="err" id="w-err"></div>
+    <button class="btn" id="w-go">출금 신청 (모의)</button>
+    <div class="note"><b>꼭 기억하세요</b><br>
+      · 네트워크가 다르면 코인을 영영 잃을 수 있습니다. (예: 보내는 쪽 TRC20, 받는 쪽 ERC20)<br>
+      · XRP처럼 <b>태그/메모</b>가 필요한 코인은 태그를 빼먹으면 입금이 반영되지 않습니다.<br>
+      · 실제 거래소는 <b>트래블룰</b>에 따라 일정 금액 이상 출금 시 받는 거래소·수취인 정보를 확인하고,
+        미리 등록한 본인 주소로만 출금을 허용하기도 합니다.<br>
+      · 처음 보내는 주소라면 소액으로 먼저 테스트 전송을 해 보는 습관이 안전합니다.</div>
+  </div>`;
+}
+function wdVals() {
+  const c = coin(route.sym), net = c.nets.find(n => n.id === $("w-net").value), a = num($("w-amt").value);
+  return { c, net, a, tot: a + net.fee, addr: $("w-addr").value.trim(), tag: c.tag ? $("w-tag").value.trim() : "" };
+}
+function calcWd() {
+  if (!$("w-net")) return; const w = wdVals();
+  $("w-fee").textContent = fq(w.net.fee) + " " + w.c.s;
+  $("w-tot2").textContent = w.a ? fq(w.tot) + " " + w.c.s : "-";
+  $("w-recv").textContent = w.a ? fq(w.a) + " " + w.c.s : "-";
+}
+function submitWd() {
+  const w = wdVals(), e = $("w-err");
+  if (!w.addr) return e.textContent = "받는 주소를 입력하세요.";
+  if (!w.net.re.test(w.addr)) return e.textContent = `${w.net.label} 주소 형식이 아닙니다. 네트워크와 주소를 다시 확인하세요.`;
+  if (w.c.tag && !/^\d{1,10}$/.test(w.tag)) return e.textContent = "데스티네이션 태그(숫자)를 입력하세요. 태그 없이 보내면 입금이 누락됩니다.";
+  if (!w.a || w.a <= 0) return e.textContent = "출금 수량을 입력하세요.";
+  if (w.tot > qty(w.c.s) + 1e-12) return e.textContent = "출금가능 수량이 부족합니다. (수량 + 수수료)";
+  if (!$("ck1").checked || !$("ck2").checked || !$("ck3").checked) return e.textContent = "확인 사항 3가지를 모두 체크하세요.";
+  S.bal[w.c.s].q = Math.max(0, S.bal[w.c.s].q - w.tot); if (S.bal[w.c.s].q < 1e-10) delete S.bal[w.c.s];
+  const tx = { id: "DEMO-" + rnd(40, "0123456789abcdef"), t: Date.now(), sym: w.c.s, net: w.net.id,
+    q: w.a, fee: w.net.fee, addr: w.addr, tag: w.tag, done: false };
+  S.hist.unshift({ t: tx.t, type: "출금", sym: w.c.s, q: w.a, krw: 0, memo: w.net.id, tx });
+  S.withdrew = true; save(); settle();
+  go({ tab: "wallet", page: "result", txid: tx.id });
+}
+// 출금은 신청 6초 뒤 "완료"로 바뀝니다 (블록 확인 대기를 흉내 낸 것).
+function settle() {
+  let changed = false;
+  S.hist.forEach(h => {
+    if (h.tx && !h.tx.done) {
+      const left = 6000 - (Date.now() - h.tx.t);
+      if (left <= 0) { h.tx.done = true; changed = true; }
+      else setTimeout(settle, left + 50);
+    }
+  });
+  if (changed) { save(); if (route.page === "result" || route.page === "asset" || route.tab === "history") render(); }
+}
+function vResult() {
+  const h = S.hist.find(x => x.tx && x.tx.id === route.txid); if (!h) return vWallet();
+  const x = h.tx;
+  return `<div class="head"><button class="back" data-go="wallet">‹</button>출금 ${x.done ? "완료" : "진행 중"}</div>
+  <div class="pad" style="padding-top:0">
+    <div class="big">${fq(x.q)} <span style="font-size:16px">${x.sym}</span></div>
+    <div class="mt"><span class="badge ${x.done ? "ok" : ""}">${x.done ? "출금 완료 (모의)" : "블록 확인 대기 중… (모의)"}</span></div>
+    <div class="kv mt"><span class="sub">네트워크</span><span>${esc(x.net)}</span></div>
+    <div class="kv"><span class="sub">수수료</span><span>${fq(x.fee)} ${x.sym}</span></div>
+    <div class="kv"><span class="sub">받는 주소</span></div><div class="mono small">${esc(x.addr)}</div>
+    ${x.tag ? `<div class="kv"><span class="sub">태그</span><span>${esc(x.tag)}</span></div>` : ""}
+    <div class="kv mt"><span class="sub">TXID (가상)</span></div><div class="mono small" id="r-tx">${esc(x.id)}</div>
+    <div class="btns mt"><button class="btn ghost" id="r-copy">TXID 복사</button><button class="btn" data-go="wallet">확인</button></div>
+    <div class="note"><b>다음 단계</b><br>모의 바이낸스 앱의 입금 내역에서 같은 수량(${fq(x.q)} ${x.sym})이 들어왔는지 확인하세요.
+      실제로는 TXID로 블록 탐색기에서 전송 상태를 조회할 수 있습니다. 이 TXID는 가상이라 조회되지 않습니다.</div>
+  </div>`;
+}
+
+/* ---------- 투자내역 ---------- */
+function histRow(h) {
+  const st = h.tx ? `<span class="badge ${h.tx.done ? "ok" : ""}">${h.tx.done ? "완료" : "진행중"}</span>` : `<span class="badge ok">완료</span>`;
+  const d = new Date(h.t), ts = `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  return `<${h.tx ? `button data-tx="${esc(h.tx.id)}"` : "div"} class="row">
+    <span class="name"><b>${esc(h.type)} ${h.sym === "KRW" ? "" : esc(h.sym)}</b><span class="sub small">${ts} ${esc(h.memo)}</span></span>
+    <span class="col">${h.sym === "KRW" ? won(h.krw) + "원" : fq(h.q)}${h.krw && h.sym !== "KRW" ? `<br><span class="sub small">${won(h.krw)}원</span>` : ""}</span>
+    <span class="col">${st}</span></${h.tx ? "button" : "div"}>`;
+}
+function vHistory() {
+  const held = COINS.filter(c => qty(c.s) > 0);
+  return `<div class="head">투자내역</div>
+  <div class="thead"><span>보유자산</span><span>평가금액</span><span>수익률</span></div>
+  ${held.length ? held.map(c => { const b = S.bal[c.s], ev = b.q * price[c.s], r = (price[c.s] / b.avg - 1) * 100;
+    return `<button class="row" data-asset="${c.s}">${icon(c)}<span class="name"><b>${c.n}</b><span class="sub small">${fq(b.q)} ${c.s}</span></span>
+      <span class="col">${won(ev)}</span><span class="col ${r > 0 ? "up" : r < 0 ? "down" : ""}">${r.toFixed(2)}%</span></button>`; }).join("")
+    : `<div class="pad sub">보유 중인 코인이 없습니다.</div>`}
+  <div class="thead mt"><span>거래내역</span><span>수량/금액</span><span>상태</span></div>
+  ${S.hist.length ? S.hist.map(histRow).join("") : `<div class="pad sub">거래내역이 없습니다.</div>`}`;
+}
+
+/* ---------- 더보기 ---------- */
+function vMore() {
+  const m = [[S.deposited, "모의 은행에서 KRW 입금하기", "입출금 → KRW 입금"],
+    [S.bought, "전송에 쓸 코인 매수하기", "거래소 → 코인 선택 → 매수 (XRP·TRX·USDT 추천)"],
+    [S.withdrew, "모의 바이낸스 입금 주소로 출금하기", "입출금 → 코인 → 출금하기 (네트워크·주소·태그 확인)"],
+    [S.hist.some(h => h.tx && h.tx.done), "출금 완료 확인하고 TXID 살펴보기", "투자내역에서 출금 건을 눌러 보세요"]];
+  return `<div class="head">더보기</div>
+  <div class="pad" style="padding-top:0">
+    <h3 style="margin:0 0 6px">학습 미션: 은행 → 국내 거래소 → 해외 거래소</h3>
+    <ul class="mission">${m.map(([ok, t, d], i) => `<li class="${ok ? "done" : ""}">${ok ? "✅" : "⬜"} ${i + 1}. ${t}<br><span class="sub small">　 ${d}</span></li>`).join("")}</ul>
+    <div class="note"><b>이 앱에 대해</b><br>
+      학생들의 모의투자 수업을 위한 <b>교육용 시뮬레이터</b>입니다. 업비트(두나무)와 아무 관련이 없는 비공식 연습 도구이며,
+      실제 계좌·거래소·블록체인과 연결되지 않습니다. 시세, 잔고, 주소, TXID는 모두 가상이고 이 기기의 브라우저에만 저장됩니다.
+      <b>실제 비밀번호·PIN·계좌번호·지갑 주소를 입력하지 마세요.</b><br><br>
+      실제 가상자산 거래는 원금 손실 위험이 크고, 국내 거래소는 만 19세 이상 본인 명의 계좌로만 이용할 수 있습니다.</div>
+    <div class="mt"><button class="btn ghost" id="reset">모의 데이터 초기화</button></div>
+  </div>`;
+}
+
+/* ---------- PIN (연습용) ---------- */
+let pinBuf = "";
+function drawPin() {
+  const ks = "0123456789".split("").sort(() => Math.random() - .5);
+  $("pin").innerHTML = `<div class="logo">MOCK EX<small>교육용 모의 거래소</small></div>
+    <h2>연습용 PIN 입력</h2><div class="small" style="opacity:.85;text-align:center;padding:0 24px">
+      아무 숫자 6자리나 누르면 들어갑니다.<br><b>실제로 쓰는 PIN·비밀번호는 입력하지 마세요.</b></div>
+    <div class="dots" id="dots">${"<i></i>".repeat(6)}</div>
+    <div class="small" style="opacity:.7;padding:0 24px;text-align:center">실제 앱은 훔쳐보기를 막으려고 숫자 배열을 매번 섞습니다.</div>
+    <div class="keys">${ks.slice(0, 9).map(k => `<button data-k="${k}">${k}</button>`).join("")}
+      <button></button><button data-k="${ks[9]}">${ks[9]}</button><button data-k="del">⌫</button></div>`;
+}
+$("pin").addEventListener("click", ev => {
+  const b = ev.target.closest("[data-k]"); if (!b) return;
+  pinBuf = b.dataset.k === "del" ? pinBuf.slice(0, -1) : pinBuf + b.dataset.k;
+  [...$("dots").children].forEach((d, i) => d.classList.toggle("on", i < pinBuf.length));
+  if (pinBuf.length >= 6) { pinBuf = ""; setTimeout(() => { $("pin").style.display = "none"; }, 150); } // PIN은 저장·검증하지 않음
+});
+
+/* ---------- 이벤트 ---------- */
+$("tabbar").addEventListener("click", ev => { const b = ev.target.closest("[data-go]"); if (b) go({ tab: b.dataset.go }); });
+$("view").addEventListener("click", ev => {
+  const t = ev.target.closest("button"); if (!t) return; const d = t.dataset;
+  if (d.go) return go({ tab: d.go });
+  if (d.order) return go({ tab: "market", page: "order", sym: d.order, side: "buy" });
+  if (d.side) return go({ ...route, side: d.side });
+  if (d.page) return go({ tab: "wallet", page: d.page });
+  if (d.asset) return go({ tab: "wallet", page: "asset", sym: d.asset });
+  if (d.wd) return go({ tab: "wallet", page: "withdraw", sym: d.wd });
+  if (d.tx) return go({ tab: "wallet", page: "result", txid: d.tx });
+  if (d.pct) { const side = route.side || "buy", p = +d.pct / 100;
+    $("o-amt").value = side === "buy" ? Math.floor(S.krw * p) : +(qty(route.sym) * p).toFixed(8); return calcOrder(); }
+  if (d.add) { $("k-amt").value = Math.floor(num($("k-amt").value)) + +d.add; return; }
+  switch (t.id) {
+    case "o-go": return submitOrder();
+    case "k-go": return submitKrw();
+    case "w-go": return submitWd();
+    case "w-max": { const w = wdVals(); $("w-amt").value = Math.max(0, +(qty(w.c.s) - w.net.fee).toFixed(8)); return calcWd(); }
+    case "w-sample": $("w-addr").value = sampleAddr($("w-net").value); if ($("w-tag")) $("w-tag").value = Math.floor(1e8 + Math.random() * 9e8);
+      return toast("형식만 맞춘 가짜 주소입니다 (연습용)");
+    case "r-copy": { const tx = $("r-tx").textContent;
+      (navigator.clipboard ? navigator.clipboard.writeText(tx) : Promise.reject()).then(() => toast("TXID를 복사했습니다"), () => toast("복사할 수 없습니다. 직접 선택해 복사하세요")); return; }
+    case "reset": if (confirm("모의 잔고와 내역을 모두 지울까요?")) { S = fresh(); save(); render(); toast("초기화했습니다"); } return;
+  }
+});
+$("view").addEventListener("input", ev => { document.querySelectorAll("#view .err").forEach(e => e.textContent = ""); if (ev.target.id === "o-amt") calcOrder(); if (/^w-(amt|net)$/.test(ev.target.id)) calcWd(); });
+
+/* ---------- 가상 시세 ---------- */
+setInterval(() => {
+  COINS.forEach(c => {
+    const vol = c.s === "USDT" ? 0.0004 : 0.0025;
+    let p = price[c.s] * (1 + (Math.random() - .5) * 2 * vol);
+    price[c.s] = Math.min(base[c.s] * 1.3, Math.max(base[c.s] * 0.7, p));
+    const g = chg(c.s);
+    document.querySelectorAll(`[data-p="${c.s}"]`).forEach(e => { e.textContent = fp(price[c.s]); e.className = e.className.replace(/\b(up|down)\b/g, "").trim() + " " + g.cls; });
+    document.querySelectorAll(`[data-c="${c.s}"]`).forEach(e => { e.textContent = g.pct.toFixed(2) + "%"; e.className = e.className.replace(/\b(up|down)\b/g, "").trim() + " " + g.cls; });
+    document.querySelectorAll(`[data-v="${c.s}"]`).forEach(e => { e.textContent = won(qty(c.s) * price[c.s]) + " KRW"; });
+  });
+  const ev = totalEval();
+  if ($("m-ev")) { $("m-ev").textContent = won(ev); const pl = ev - totalBuy(); $("m-pl").textContent = won(pl); $("m-pl").className = pl > 0 ? "up" : pl < 0 ? "down" : ""; }
+  if ($("w-tot")) $("w-tot").textContent = won(S.krw + ev);
+  if (route.page === "order") calcOrder();
+}, 1500);
+
+drawPin(); settle(); render();
+</script>
+</body>
+</html>
